@@ -8,16 +8,17 @@ Requirements:
 
    bash Anaconda3-2024.06-1-Linux-x86_64.sh
    ```
-2. Install conda environment
+1. Install conda environment
    ```
    conda env create -f ALEXIS_conda_environment.yml
    
    ```
-3. Activate conda environment
+1. Fork ALEXIS_pipeline repository to your own github account. Then,clone your copy of ALEXIS_pipeline to the machine you are working from. A walk through of a similar process can be found here: https://github.com/jpadial15/ai-science-training-series/blob/main/00_introToAlcf/03_githubHomework.md
+1. Activate conda environment
    ```
    conda activate aiadl_2
    ```
-4. SQLite databases: 
+1. SQLite databases: 
    - Make or download the XRS availability database.
    ```
 
