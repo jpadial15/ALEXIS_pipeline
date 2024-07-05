@@ -17,3 +17,22 @@ Requirements:
    ```
    conda activate aiadl_2
    ```
+4. SQLite databases: 
+   - Make or download the XRS availability database.
+   ```
+
+   ```
+  - Make or download the AIA availability database.
+  ```
+
+  ```
+  - Make or download the HARP DRMS availability database.
+  ```
+  
+  ```
+  - Make or download the SXI availability database.
+  ```
+
+  ```
+  - Make HEK Known flares database.
+
