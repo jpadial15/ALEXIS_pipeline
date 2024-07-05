@@ -13,7 +13,6 @@ NOTIFY_EMAIL_ADDR = 'jorge.r.padial.doble@vanderbilt.edu'
 ############################################
 
 
-
 DATA_DIR_PRODUCTS = f'{MAIN_DIR_NEW}/data_products'
 
 DATA_DIR_GOES_FLUX = f'{MAIN_DIR_NEW}/goes_data_flux'
