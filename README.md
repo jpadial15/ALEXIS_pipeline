@@ -8,12 +8,14 @@ Requirements:
 
    bash Anaconda3-2024.06-1-Linux-x86_64.sh
    ```
+1. Fork ALEXIS_pipeline repository to your own github account. Then,clone your copy of ALEXIS_pipeline to the machine you are working from. A walk through of a similar process can be found here: https://github.com/jpadial15/ai-science-training-series/blob/main/00_introToAlcf/03_githubHomework.md
+
 1. Install conda environment
    ```
    conda env create -f ALEXIS_conda_environment.yml
    
    ```
-1. Fork ALEXIS_pipeline repository to your own github account. Then,clone your copy of ALEXIS_pipeline to the machine you are working from. A walk through of a similar process can be found here: https://github.com/jpadial15/ai-science-training-series/blob/main/00_introToAlcf/03_githubHomework.md
+
 1. Activate conda environment
    ```
    conda activate aiadl_2
