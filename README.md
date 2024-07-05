@@ -8,4 +8,7 @@ wget https://repo.anaconda.com/archive/Anaconda3-2024.06-1-Linux-x86_64.sh
 
 bash Anaconda3-2024.06-1-Linux-x86_64.sh
 ```
-
+2. Install conda environment
+   ```
+   conda install environmentl.yml
+   ```
