@@ -20,9 +20,6 @@ tw = lambda x: os.path.join(WORKING_DIR, x)
 ###### REVIEW AND OPTIMIZE Jan17,2020 ###########
 
 
-
-
-
 # some dictionaries we'll use sometimes
 instruments = ['goes13', 'goes14', 'goes15']
 
