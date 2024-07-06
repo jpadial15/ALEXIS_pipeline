@@ -2,8 +2,8 @@ import os
 
 
 HOME_DIR = '~/ALEXIS_pipeline'
-MAIN_DIR_NEW = '/lus/eagle/clone/g2/projects/ALEXIS'
-MAIN_DATA_DIR = ''
+MAIN_DIR_NEW = '~/ALEXIS_pipeline'
+MAIN_DATA_DIR = '/mnt/e/image_data'
 
 #############################################
 JSOC_DL_DIR = "jsoc.download"
