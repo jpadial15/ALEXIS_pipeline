@@ -1,8 +1,11 @@
+import sys  
+sys.path.insert(1, '..')
+sys.path.insert(2, '../modules/')
+
 import pickle
 import os
 import pandas as pd
 import numpy as np
-import pandas as pd
 from sunpy.time import TimeRange
 import sunpy.instr.goes
 import time
