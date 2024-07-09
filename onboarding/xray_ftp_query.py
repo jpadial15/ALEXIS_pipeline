@@ -102,18 +102,20 @@ def dl_params():
 
         outfile = tw("{}.query".format(out_name))
 
-        yield(infile, outfile, ftp_name, out_name)
+        wget_log_file = dictionary_element['wget_log_file']
+
+        yield(infile, outfile, ftp_name, out_name, wget_log_file)
 
 @mkdir(WORKING_DIR)
 @files(dl_params)
-def make_request(infile, outfile, ftp_name, out_name):
+def make_request(infile, outfile, ftp_name, out_name, wget_log_file):
 
 	"""
     make ruffus checkpoint of each individual daily xray data query.
 
 	"""
 
-	pickle.dump({'ftp_name': ftp_name, 'outname': out_name}, open(outfile, 'wb'))
+	pickle.dump({'ftp_name': ftp_name, 'outname': out_name, 'wget_log_file': wget_log_file}, open(outfile, 'wb'))
 
 @transform(make_request, suffix('.query'), ".downloaded")
 def download_data(infile, outfile):
