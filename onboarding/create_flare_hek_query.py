@@ -16,9 +16,10 @@ import re
 from datetime import timedelta
 
 import dataconfig
-import convert_datetime
 
-WORKING_DIR = 'flare_hekQ.working'
+from modules import convert_datetime
+
+WORKING_DIR = dataconfig.DATA_DIR_HEK_FLARES
 tw = lambda x: os.path.join(WORKING_DIR, x)
 
 # create initial time pairs for running through the hek AR query by month
@@ -29,7 +30,7 @@ from datetime import timedelta
 time_array = []
 
 
-x = pd.date_range(start='4/01/2010', end='11/30/2020', freq = 'M')
+x = pd.date_range(start='4/01/2010', end='11/30/2020', freq = 'M')[:10]
 
 # x starts with the end date of april such that for every starting point we need to add an extra day such that we begin in the same month as the end month. 
 for previous, current in zip(x, x[1:]):
@@ -54,6 +55,7 @@ def create_initial_files():
 @files(create_initial_files)
 def create_request(infile, outfile, start, end):
 
+	# print(outfile)
 
 	pickle.dump({'start': start, 'end': end, 'event_type': 'FL'}, open(outfile, 'wb'))
 	
@@ -62,6 +64,7 @@ def create_request(infile, outfile, start, end):
 
 @transform(create_request, suffix('.start.pickle'), "_flares_hek_result.pickle")
 def download_data(infile, outfile):
+
 	start_file = pickle.load(open(infile, 'rb'))
 
 	client = hek.HEKClient()
@@ -71,13 +74,6 @@ def download_data(infile, outfile):
 	tstart = start_file['start']
 
 	tend = start_file['end']
-
-	# print('started {}'.format(tstart))
-
-	# time_range = TimeRange(t_start, t_end)
-
-	# tstart = time_range.start
-	# tend = time_range.end
 
 	AR_results = client.search(hek.attrs.Time(tstart, tend),
 	                           hek.attrs.EventType(event_type))
@@ -140,13 +136,23 @@ def parse_HEK_FL_result(infile, outfile):
 		else:
 			flare_loc_bool = 0
 
+		goes_class = str(r['fl_goescls'])
+
+		try:
+			# will fail if not a number
+			goes_number = np.float(goes_class[1:])
+		except:
+			goes_number = np.nan
+
 		goes_event = {
 			'event_date': parse_time(r['event_starttime']).strftime(
-			    '%Y-%m-%d'),
-			'start_time': parse_time(r['event_starttime']),
-			'peak_time': parse_time(r['event_peaktime']),
-			'end_time': parse_time(r['event_endtime']),
-			'goes_class': str(r['fl_goescls']),
+				'%Y-%m-%d'),
+			'start_time': convert_datetime.astropytime_to_pythondatetime(parse_time(r['event_starttime'])),
+			'peak_time': convert_datetime.astropytime_to_pythondatetime(parse_time(r['event_peaktime'])),
+			'end_time': convert_datetime.astropytime_to_pythondatetime(parse_time(r['event_endtime'])),
+			'goes_class': goes_class,
+			'goes_letter': goes_class[:1],
+			'goes_number': goes_number,
 			'AR_num': r['ar_noaanum'],
 			'hgs_x': r['hgs_x'],
 			'hgs_y': r['hgs_y'],
@@ -173,7 +179,8 @@ def parse_HEK_FL_result(infile, outfile):
 
 	# print('Ended {}'.format(tstart))
 
-@merge(parse_HEK_FL_result, 'hek_flare_db.pickle', output_dir=f'{dataconfig.DATA_DIR_PRODUCTS}')
+
+@merge(parse_HEK_FL_result, os.path.join(dataconfig.DATA_DIR_PRODUCTS, 'hek_flare_db.pickle'))
 def merge_hek_query_per_month(infiles, outfile):
 	merged_df_list = []
 
@@ -189,4 +196,4 @@ def merge_hek_query_per_month(infiles, outfile):
 
 	pickle.dump(merged_df, open(outfile, 'wb'))
 
-pipeline_run([merge_hek_query_per_month], multiprocess = 10, verbose = 4)
+pipeline_run([merge_hek_query_per_month], multiprocess = 10, verbose = 2)
