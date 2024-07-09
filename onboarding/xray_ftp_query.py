@@ -263,7 +263,7 @@ goes_data = sa.Table('goes_data', metadata,
         sa.Column('value', sa.types.Float(), index = True)
                         )
 
-
+@jobs_limit(1)
 @mkdir(dataconfig.DATA_DIR_PRODUCTS)
 @transform(dataframe_cleanup, suffix('_clean_data.timestamp.df.pickle'), '_sqlite.inserted')
 def insert_flux_to_sqlite(infile, outfile):
