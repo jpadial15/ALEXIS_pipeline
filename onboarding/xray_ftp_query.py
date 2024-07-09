@@ -247,6 +247,13 @@ import pandas as pd
 
 engine = sa.create_engine(f'sqlite:////{DATA_PRODUCT_DIR}/timestamp_xrayDB.db', echo = True)
 
+# Get the absolute path of the directory above the current working directory
+# current_dir = os.getcwd()
+# parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+
+# # Construct the path to the database
+# DATA_PRODUCT_DIR = os.path.join(parent_dir, 'timestamp_xrayDB.db')
+
 metadata = sa.MetaData()
 
 goes_data = sa.Table('goes_data', metadata, 
@@ -280,7 +287,7 @@ def insert_flux_to_sqlite(infile, outfile):
 if __name__ == "__main__":
     pipeline_run([download_data], multiprocess = 1, verbose = 4) 
 
-    pipeline_run([insert_flux_to_sqlite], multiprocess= 14, verbose = 4)
+    pipeline_run([insert_flux_to_sqlite], multiprocess= 1, verbose = 4)
 
 
 # # pipeline_run([dataframe_cleanup], multiprocess = 14)
