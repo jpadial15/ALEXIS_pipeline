@@ -2,7 +2,6 @@ import sys
 sys.path.insert(1, '..')
 sys.path.insert(2, '../modules/')
 
-
 from datetime import timedelta, date
 import pickle
 from ruffus import *
@@ -11,8 +10,6 @@ import xarray as xr
 import pandas as pd
 import numpy as np
 import re
-import sqlalchemy as sa
-import pandas as pd
 
 import dataconfig
 
@@ -82,12 +79,13 @@ for full_instrument_name in instruments:
 
         ftp_name = f'{ftp_prename}/{full_instrument_name}/gxrs-l2-irrad_science/{year}/{month}/{specific_file_name}'
 
+        ftp_name_dict.append({'download_file': ftp_name, 'out_name': outfile_str, 'wget_log_file': wget_log_file })
+
         outfile_str = tw(f'{year}-{month}-{day}_{full_instrument_name}_irrad.nc')
 
         wget_log_file = f'{outfile_str}.wget_log'
 
         ftp_name_dict.append({'download_file': ftp_name, 'out_name': outfile_str, 'wget_log_file': wget_log_file })
-
 
 # print(ftp_name_dict)
 
@@ -134,13 +132,13 @@ def download_data(infile, outfile):
 
     download_str = f'wget -e robots=off --recursive --no-parent -A --directory-prefix {WORKING_DIR} --no-directories --verbose False {ftp_query_name} -O {outfile_name} -o {wget_log_file}' 
 
-    out_dict = queries.copy()
-
-    out_dict['download_str'] = download_str
-
     os.system(download_str)
 
-    pickle.dump(out_dict, open(outfile, 'wb'))
+
+        ############### END EDIT ###################
+
+
+    pickle.dump({'infile': infile}, open(outfile, 'wb'))
 
 
 
@@ -238,7 +236,8 @@ def dataframe_cleanup(infile, outfile):
 
 ### CREATE SQLlite DB ###
 
-
+import sqlalchemy as sa
+import pandas as pd
 # import os 
 # import fastparquet
 # #os.chdir('/data/padialjr/jorge-helio/data/goes_data/')
@@ -279,7 +278,7 @@ def insert_flux_to_sqlite(infile, outfile):
 
 
 if __name__ == "__main__":
-    pipeline_run([download_data], multiprocess = 14, verbose = 4) 
+    pipeline_run([download_data], multiprocess = 1, verbose = 4) 
 
     pipeline_run([insert_flux_to_sqlite], multiprocess= 14, verbose = 4)
 
