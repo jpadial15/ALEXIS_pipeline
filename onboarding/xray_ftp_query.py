@@ -285,7 +285,7 @@ def insert_flux_to_sqlite(infile, outfile):
 
 
 if __name__ == "__main__":
-    pipeline_run([download_data], multiprocess = 14, verbose = 4) 
+    pipeline_run([download_data], multiprocess = 2, verbose = 4) 
 
     pipeline_run([insert_flux_to_sqlite], multiprocess= 14, verbose = 4)
 
