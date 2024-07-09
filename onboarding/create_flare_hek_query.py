@@ -30,7 +30,7 @@ from datetime import timedelta
 time_array = []
 
 
-x = pd.date_range(start='4/01/2010', end='11/30/2020', freq = 'M')[:10]
+x = pd.date_range(start='4/01/2010', end='11/30/2020', freq = 'M')
 
 # x starts with the end date of april such that for every starting point we need to add an extra day such that we begin in the same month as the end month. 
 for previous, current in zip(x, x[1:]):
