@@ -79,8 +79,6 @@ for full_instrument_name in instruments:
 
         ftp_name = f'{ftp_prename}/{full_instrument_name}/gxrs-l2-irrad_science/{year}/{month}/{specific_file_name}'
 
-        ftp_name_dict.append({'download_file': ftp_name, 'out_name': outfile_str, 'wget_log_file': wget_log_file })
-
         outfile_str = tw(f'{year}-{month}-{day}_{full_instrument_name}_irrad.nc')
 
         wget_log_file = f'{outfile_str}.wget_log'
