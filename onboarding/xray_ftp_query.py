@@ -1,3 +1,8 @@
+import sys  
+sys.path.insert(1, '..')
+sys.path.insert(2, '../modules/')
+
+
 from datetime import timedelta, date
 import pickle
 from ruffus import *
@@ -6,6 +11,8 @@ import xarray as xr
 import pandas as pd
 import numpy as np
 import re
+import sqlalchemy as sa
+import pandas as pd
 
 import dataconfig
 
@@ -231,8 +238,7 @@ def dataframe_cleanup(infile, outfile):
 
 ### CREATE SQLlite DB ###
 
-import sqlalchemy as sa
-import pandas as pd
+
 # import os 
 # import fastparquet
 # #os.chdir('/data/padialjr/jorge-helio/data/goes_data/')
