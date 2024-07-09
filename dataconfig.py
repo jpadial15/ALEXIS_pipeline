@@ -1,8 +1,8 @@
 import os
 
 
-HOME_DIR = '~/ALEXIS_pipeline'
-MAIN_DIR_NEW = '~/ALEXIS_pipeline'
+HOME_DIR = '/home/padialjr/ALEXIS_pipeline'
+MAIN_DIR_NEW = '/home/padialjr/ALEXIS_pipeline'
 MAIN_DATA_DIR = '/mnt/e/image_data'
 
 #############################################
