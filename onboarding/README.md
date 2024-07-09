@@ -19,8 +19,9 @@
    ```
 1. SQLite databases: 
    - Make or download the XRS availability database.
+   - Remember to make the data_products directory and verify the permissions of all directories and data products. Permissions need to be changed for ruffus database. 
    ```
-
+   python xray_ftp_query.py
    ```
   - Make or download the AIA availability database.
   ```
