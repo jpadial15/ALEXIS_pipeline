@@ -1,23 +1,22 @@
-import sys  
+import sys 
+import os 
 sys.path.insert(1, '..')
 sys.path.insert(2, '../modules/')
 
 import pickle
-import os
-import pandas as pd
 import numpy as np
-from sunpy.time import TimeRange
-import sunpy.instr.goes
-import time
-from time import timezone
-from sunpy.net import hek
-from sunpy.time import parse_time
+import pandas as pd
+
 
 from sunpy.net import hek
 from sunpy.time import parse_time
-import numpy as np
+
 from ruffus import *
 import re
+from datetime import timedelta
+
+import dataconfig
+import convert_datetime
 
 WORKING_DIR = 'flare_hekQ.working'
 tw = lambda x: os.path.join(WORKING_DIR, x)
@@ -174,7 +173,7 @@ def parse_HEK_FL_result(infile, outfile):
 
 	# print('Ended {}'.format(tstart))
 
-@merge(parse_HEK_FL_result, 'hek_flare_db.pickle')
+@merge(parse_HEK_FL_result, 'hek_flare_db.pickle', output_dir=f'{dataconfig.DATA_DIR_PRODUCTS}')
 def merge_hek_query_per_month(infiles, outfile):
 	merged_df_list = []
 
