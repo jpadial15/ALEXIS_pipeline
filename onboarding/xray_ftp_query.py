@@ -39,7 +39,7 @@ ftp_prename = 'ftp://satdat.ngdc.noaa.gov/sem/goes/data/science/xrs'
 # end_download_at = input('Insert date and time you would like your XRay Flux Data to END at. For example: YYYY-MM-DD HH:MM:SS ' )
 
 start_download_from = '2010-05-01T00:00:00'
-end_download_at = '2010-05-02T00:00:00'
+end_download_at = '2010-05-03T00:00:00'
 
 START_DATE_TIME = pd.Timestamp(start_download_from, tz = 'utc')
 
@@ -285,9 +285,9 @@ def insert_flux_to_sqlite(infile, outfile):
 
 
 if __name__ == "__main__":
-    pipeline_run([download_data], multiprocess = 1, verbose = 4) 
+    pipeline_run([download_data], multiprocess = 14, verbose = 4) 
 
-    pipeline_run([insert_flux_to_sqlite], multiprocess= 1, verbose = 4)
+    pipeline_run([insert_flux_to_sqlite], multiprocess= 14, verbose = 4)
 
 
 # # pipeline_run([dataframe_cleanup], multiprocess = 14)
