@@ -39,7 +39,7 @@ ftp_prename = 'ftp://satdat.ngdc.noaa.gov/sem/goes/data/science/xrs'
 # end_download_at = input('Insert date and time you would like your XRay Flux Data to END at. For example: YYYY-MM-DD HH:MM:SS ' )
 
 start_download_from = '2010-05-01T00:00:00'
-end_download_at = '2011-05-01T00:00:00'
+end_download_at = '2012-05-01T00:00:00'
 
 START_DATE_TIME = pd.Timestamp(start_download_from, tz = 'utc')
 
