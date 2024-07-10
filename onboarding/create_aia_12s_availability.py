@@ -59,7 +59,7 @@ def make_aia_fits_filename(date_time_instance,WL):
     return(this_filename)
 
 ###################################################
-jsoc_email = 'jorge.r.padial.doble@vanderbilt.edu'
+jsoc_email = dataconfig.NOTIFY_EMAIL_ADDR
 ###################################################
 
 client = drms.Client(email=jsoc_email)
