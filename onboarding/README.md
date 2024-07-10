@@ -6,21 +6,22 @@
 
    bash Anaconda3-2024.06-1-Linux-x86_64.sh
    ```
-## 1. Fork ALEXIS_pipeline repository to your own github account. Then,clone your copy of ALEXIS_pipeline to the machine you are working from. A walk through of a similar process can be found here: https://github.com/jpadial15/ai-science-training-series/blob/main/00_introToAlcf/03_githubHomework.md
+## 2. Fork ALEXIS_pipeline repository to your own github account. 
+   Then,clone your copy of ALEXIS_pipeline to the machine you are working from. A walk through of a similar process can be found here: https://github.com/jpadial15/ai-science-training-series/blob/main/00_introToAlcf/03_githubHomework.md
 
-## 1. Install conda environment
+## 3. Install conda environment
    ```
    conda env create -f ALEXIS_conda_environment.yml
    
    ```
 
-## 1. Activate conda environment
+## 4. Activate conda environment
    ```
    conda activate aiadl_2
    ```
-## 1. Modify the data config file.
+## 5. Modify the data config file.
    In the home directory of the repository, change the values of home directory, jsoc email. 
-## 1. SQLite databases: 
+## 6. SQLite databases: 
    - Make or download the XRS availability database.
    - Remember to make the data_products directory and verify the permissions of all directories and data products. Permissions need to be changed for ruffus database. 
       ```
