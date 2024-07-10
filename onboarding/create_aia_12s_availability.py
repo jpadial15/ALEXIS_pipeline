@@ -153,6 +153,7 @@ aia_availability = sa.Table(
 
         
 ########################################################################
+@jobs_limit(1)
 @transform(make_request, suffix('df.pickle'), 'sqlite.inserted.pickle')
 def insert_aia_availability_into_sqlite(infile, outfile):
 
@@ -180,8 +181,8 @@ def insert_aia_availability_into_sqlite(infile, outfile):
 
 
 if __name__ == "__main__":
-    pipeline_run([make_request], multiprocess = 10)
-    pipeline_run([insert_aia_availability_into_sqlite], multiprocess = 1) 	
+    pipeline_run([insert_aia_availability_into_sqlite], multiprocess = 10)
+    # pipeline_run([insert_aia_availability_into_sqlite], multiprocess = 1) 	
 
 
     # pipeline_run([insert_zerocross_to_sqlite], multiprocess = 1, verbose = 4)
