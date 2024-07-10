@@ -37,15 +37,15 @@
       ```
   - Make or download the AIA availability database.
       ```
-      
+      python create_aia_12s_availability.py
       ```
   - Make or download the HARP DRMS availability database.
       ```
-      
+      python create_drms_hmi_AR_db.py
       ```
   - Make or download the SXI availability database.
       ```
-      
+      python create_sxi_availability.py
       ```
 
 
