@@ -35,7 +35,7 @@ DATA_DIR_GOES_SXI = f'{MAIN_DATA_DIR}/goes_data_sxi'
 
 DATA_DIR_ZERO_CROSS = f'{MAIN_DATA_DIR}/zero_cross_data'
 
-DATA_DIR_IMG_RUFFUS_OUTPUT = f'{DATA_DIR_IMG_DATA}/ruffus_output_files'
+DATA_DIR_IMG_RUFFUS_OUTPUT = f'{MAIN_DATA_DIR}/ruffus_output_files'
 
 DATA_DIR_AIA = f'{MAIN_DATA_DIR}/aia_data'
 
