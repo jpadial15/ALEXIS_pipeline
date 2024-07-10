@@ -31,7 +31,9 @@ DATA_DIR_HEK_FLARES = f'{MAIN_DATA_DIR}/hek_flares_data'
 
 DATA_DIR_GOES_FLUX = f'{MAIN_DATA_DIR}/xrs_data_flux'
 
-DATA_DIR_GOES_SXI = f'{MAIN_DIR_NEW}/goes_data_sxi'
+DATA_DIR_GOES_SXI = f'{MAIN_DATA_DIR}/goes_data_sxi'
+
+DATA_DIR_ZERO_CROSS = f'{MAIN_DATA_DIR}/zero_cross_data'
 
 DATA_DIR_IMG_RUFFUS_OUTPUT = f'{DATA_DIR_IMG_DATA}/ruffus_output_files'
 
