@@ -7,7 +7,7 @@ import sqlalchemy as sa
 from datetime import datetime, timedelta
 import pickle
 import convert_datetime
-from modules import dataconfig
+import dataconfig
 import json
 
 import numpy as np
