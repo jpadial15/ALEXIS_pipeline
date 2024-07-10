@@ -2,31 +2,20 @@ import sys
 import os 
 sys.path.insert(1, '..')
 sys.path.insert(2, '../modules/')
-
 import drms
-
 from ruffus import *
-import os
 import re
 import pickle
-
-
 import warnings
-
 # from create_sxi_availability_db import WORKING_DIR
 warnings.filterwarnings("ignore")
-
 from modules import convert_datetime
 from modules import query_the_data
 import dataconfig
 from modules import sxi_module
 from modules import helio_reg_exp_module
-
 from time import sleep
 from random import randint
-
-
-
 import sqlalchemy as sa
 import pandas as pd
 
