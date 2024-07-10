@@ -10,7 +10,7 @@ from reproject import reproject_interp
 import pandas as pd
 import os
 import numpy as np
-# from matplotlib.path import Path
+from matplotlib.path import Path
 
 from skimage.transform import hough_circle, hough_circle_peaks
 from skimage.feature import canny
