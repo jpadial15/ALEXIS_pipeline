@@ -94,5 +94,25 @@ def find_xray_flare_candidates(infile, outfile):
     pickle.dump(zerocross_df, open(outfile, 'wb'))
 
 
+@merge(find_xray_flare_candidates, os.path.join(dataconfig.DATA_DIR_PRODUCTS, 'agg_flare_db.pickle'))
+def create_flare_aggregate_data_product(infiles, outfile):
+     
+    merged_zerocross_df = pd.concat([pickle.load(open(file, 'rb')) for file in infiles])
+
+    hek_flares = pickle.load(open(f'{dataconfig.DATA_DIR_PRODUCTS}/hek_flare_df.pickle', 'rb'))
+
+    # make some needed dictionaries.
+    flare_class_dict_query = {'A': 1e-8, 'B': 1e-7, 'C': 1e-6, 'M': 1e-5, 'X': 1e-4}
+    teams = {'ALEXIS': 1, 'SWPC': 2, 'SolarSoft':4}  
+
+    # NOTE: tuples are (ALEXIS, SWPC, solar_soft)  
+      
+    id_dict = {'7':(1,1,1), '6': (0,1,1), '5': (1,0,1),'4': (0,0,1),'3': (1,1,0),'2': (0,1,0),'1': (1,0,0)}
+
+
+
+    # pickle.dump(output_df, open(outfile, 'wb'))
+
+
 if __name__ == "__main__":
-    pipeline_run([find_xray_flare_candidates], multiprocess = 10, verbose = 4)
+    pipeline_run([create_flare_aggregate_data_product], multiprocess = 10, verbose = 4)
