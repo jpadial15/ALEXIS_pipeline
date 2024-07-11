@@ -16,7 +16,7 @@ from scipy import interpolate
 
 import sqlalchemy as sa
 
-from modules import dataconfig
+import dataconfig
 
 
 def convert_datetime_to_timestamp(datetime_to_convert):
