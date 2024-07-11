@@ -1,3 +1,6 @@
+import sys  
+sys.path.insert(1, '..')
+sys.path.insert(2, '../modules/')
 
 from datetime import datetime
 
@@ -12,6 +15,8 @@ import time
 from scipy import interpolate
 
 import sqlalchemy as sa
+
+from modules import dataconfig
 
 
 def convert_datetime_to_timestamp(datetime_to_convert):
@@ -132,9 +137,9 @@ def xray_sql_db(start_date_time, end_date_time, this_instrument):
 
     end_unix_timestamp = convert_datetime_to_timestamp(end_date_time)
 
-    MAIN_DIR = '/data/padialjr/jorge-helio'
+    # MAIN_DIR = '/data/padialjr/jorge-helio'
 
-    engine = sa.create_engine('sqlite:///{}/data_products/timestamp_xrayDB.db'.format(MAIN_DIR))
+    engine = sa.create_engine(f'sqlite:///{dataconfig.DATA_DIR_PRODUCTS}/timestamp_xrayDB.db')
 
     metadata = sa.MetaData()
 
