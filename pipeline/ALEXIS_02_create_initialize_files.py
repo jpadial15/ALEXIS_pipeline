@@ -270,13 +270,13 @@ def file_size_and_speed_w_single_image_peakfinder(infile, outfile):
 
     clean_time_start = time.time()
 
-    new_config, data, raw_header, dbscan_cluster_eps = download_module_w_new_file_syst_argonne.clean_imgs_for_peakfinder(parsed_dict)
+    new_config, data, raw_header, dbscan_cluster_eps = download_module_w_new_file_syst.clean_imgs_for_peakfinder(parsed_dict)
 
     clean_time_end = time.time()
 
     clean_time = clean_time_end - clean_time_start
 
-    single_peakfinder = download_module_w_new_file_syst_argonne.single_image_peakfinder(new_config, data, raw_header, dbscan_cluster_eps, clean_time)
+    single_peakfinder = download_module_w_new_file_syst.single_image_peakfinder(new_config, data, raw_header, dbscan_cluster_eps, clean_time)
 
     # Get the current time in the CST timezone
     current_time_end = datetime.now(cst)
