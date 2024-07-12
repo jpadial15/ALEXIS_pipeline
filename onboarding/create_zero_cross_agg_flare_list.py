@@ -73,7 +73,7 @@ def make_request(infile, outfile, start_time, end_time, instrument):
 	pickle.dump({'start_date': start_time, 'end_date': end_time, 'instrument': instrument}, open(outfile, 'wb'))
 
 # pipeline_run([make_request], multiprocess = 10, verbose = 1)
-
+# @jobs_limit(1)
 @transform(make_request, suffix('.zerocross.start'), ".zero_cross_df.pickle")
 def find_xray_flare_candidates(infile, outfile):
 
@@ -115,4 +115,4 @@ def create_flare_aggregate_data_product(infiles, outfile):
 
 
 if __name__ == "__main__":
-    pipeline_run([create_flare_aggregate_data_product], multiprocess = 10, verbose = 4)
+    pipeline_run([find_xray_flare_candidates], multiprocess = 10, verbose = 1)
