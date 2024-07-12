@@ -1,4 +1,8 @@
 # print('start loading libraries')
+import sys 
+import os 
+sys.path.insert(1, '..')
+sys.path.insert(2, '../modules/')
 import pytz
 from datetime import datetime
 # Get the CST timezone
@@ -16,11 +20,11 @@ import sys
 import os
 import hashlib
 
-import download_module_w_new_file_syst_argonne
+from modules import download_module_w_new_file_syst
 
 # import query_the_data_argonne as query_the_data
 
-import dataconfig_argonne as dataconfig
+import dataconfig
 
 # import convert_datetime
 
@@ -30,13 +34,13 @@ from ruffus import *
 
 # from astropy.io import fits
 
-# import joblib
+# import joblibs
 # import requests
 
 import warnings
 warnings.filterwarnings("ignore")
 
-import clean_img_data_02
+from modules import clean_img_data_02
 
 # import matplotlib.pyplot as plt
 
