@@ -92,7 +92,7 @@ datelist = pd.date_range(start = START_DATE_TIME , end = END_DATE_TIME, freq = f
 this_query_list = [make_aia_jsoc_availability_query_string(previous,current) for previous,current in zip(datelist[:], datelist[1:])]
 
 
-WORKING_DIR = dataconfig.DATA_DIR_AIA
+WORKING_DIR = dataconfig.DATA_DIR_AIA_AVAIL
 
 DATA_PRODUCT_DIR = dataconfig.DATA_DIR_PRODUCTS
 
