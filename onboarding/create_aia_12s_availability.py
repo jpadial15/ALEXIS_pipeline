@@ -116,7 +116,12 @@ def dl_params():
 @files(dl_params)
 def make_request(infile, outfile, jsoc_query):
 
-    sleep(randint(4,37))
+    sleep_time = randint(1,11)
+
+    # print(f'sleep time {sleep_time}')
+
+
+    sleep(sleep_time)
 
     records, filenames = client.query(jsoc_query, key=keys, seg="image")
 
