@@ -3,7 +3,7 @@ import os
 
 HOME_DIR = '/home/padialjr/ALEXIS_pipeline'
 MAIN_DIR_NEW = '/home/padialjr/ALEXIS_pipeline'
-MAIN_DATA_DIR = '/mnt/e/image_data'
+MAIN_DATA_DIR = '/mnt/e/ALEXIS_data'
 
 #############################################
 JSOC_DL_DIR = "jsoc.download"
@@ -28,6 +28,8 @@ DATA_DIR_IMG_DATA = f'{MAIN_DATA_DIR}'
 # paths that live on harddrive
 
 DATA_DIR_HEK_FLARES = f'{MAIN_DATA_DIR}/hek_flares_data'
+
+DATA_DIR_AIA_AVAIL = f'{MAIN_DATA_DIR}/aia_availability'
 
 DATA_DIR_GOES_FLUX = f'{MAIN_DATA_DIR}/xrs_data_flux'
 
