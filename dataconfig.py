@@ -33,7 +33,7 @@ DATA_DIR_AIA_AVAIL = f'{MAIN_DATA_DIR}/aia_availability'
 
 DATA_DIR_GOES_FLUX = f'{MAIN_DATA_DIR}/xrs_data_flux'
 
-DATA_DIR_GOES_SXI = f'{MAIN_DATA_DIR}/goes_data_sxi'
+DATA_DIR_GOES_SXI = f'{MAIN_DATA_DIR}/sxi_availability'
 
 DATA_DIR_ZERO_CROSS = f'{MAIN_DATA_DIR}/zero_cross_data'
 
