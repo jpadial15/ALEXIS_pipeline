@@ -18,6 +18,8 @@ from time import sleep
 from random import randint
 import sqlalchemy as sa
 import pandas as pd
+from random import shuffle
+
 
 
 def make_aia_jsoc_availability_query_string(time_ex_1, time_ex_2):
@@ -91,6 +93,7 @@ datelist = pd.date_range(start = START_DATE_TIME , end = END_DATE_TIME, freq = f
 
 this_query_list = [make_aia_jsoc_availability_query_string(previous,current) for previous,current in zip(datelist[:], datelist[1:])]
 
+shuffle(this_query_list)
 
 WORKING_DIR = dataconfig.DATA_DIR_AIA_AVAIL
 
