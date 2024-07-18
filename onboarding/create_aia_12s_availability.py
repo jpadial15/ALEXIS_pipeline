@@ -184,7 +184,7 @@ def insert_aia_availability_into_sqlite(infile, outfile):
 
 
 if __name__ == "__main__":
-    pipeline_run([insert_aia_availability_into_sqlite], multiprocess = 10)
+    pipeline_run([insert_aia_availability_into_sqlite], multiprocess = 5)
     # pipeline_run([insert_aia_availability_into_sqlite], multiprocess = 1) 	
 
 
