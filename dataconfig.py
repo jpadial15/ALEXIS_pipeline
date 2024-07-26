@@ -43,3 +43,8 @@ DATA_DIR_AIA = f'{MAIN_DATA_DIR}/aia_data'
 
 RUFFUS_SQLITE_CHECKPOINT_DIR = f'{HOME_DIR}/ruffus_sqlite_checkpoints'
 
+### SXI http path
+
+SXI_HTTP_path = 'https://www.ncei.noaa.gov/data/goes-solar-xray-imager/access/fits'
+
+
