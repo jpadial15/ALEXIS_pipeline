@@ -80,12 +80,13 @@ for flare_candidate in THESE_FLARES.itertuples():
     # save aia_sql result with filename instead of file_name. Change in order to continue
     aia_avail_df.rename(columns = {'filename':'file_name'}, inplace = True)
 
-    sxi_avail_df = query_the_data.sxi_availability_sql_db(input_datetime = the_timestamp, query_time = 40)
+    sxi_avail_df = query_the_data.sxi_availability_sql_db(input_datetime = the_timestamp, query_time = 40) #query_time must be given in minutes
 
     # #sci qual SXI is data_level == 'BA'
     sci_qual_sxi_df = sxi_avail_df[sxi_avail_df.data_level == 'BA']
 
     sci_qual_sxi_df['url'] = [re.search(r'ftp://satdat.ngdc.noaa.gov/sxi/archive/fits/goes\d{2}/\d{4}/\d{2}/\d{2}/SXI_\d{8}_\d{9}_BA_\d{2}.FTS', this_download_string).group(0) for this_download_string in sci_qual_sxi_df.download_string]
+    # [re.search(r'https:\/\/www.ncei.noaa.gov\/data\/goes-solar-xray-imager\/access\/fits\/goes\d{2}\/\d{4}\/\d{2}\/\d{2}\/SXI_\d{8}_\d{9}_[A-B][A-B]_\d{2}.FTS', this_download_string).group(0) for this_download_string in available_data_df.download_string]
 
     #drop columns to make aia and SXI the same dictionaries
 
