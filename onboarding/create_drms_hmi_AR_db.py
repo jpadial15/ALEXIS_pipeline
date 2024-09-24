@@ -214,6 +214,7 @@ hmi_drms_AR = sa.Table(
 
         
 ########################################################################
+@check_if_uptodate(make_request)
 @jobs_limit(1)
 @transform(make_request, suffix('df.pickle'), 'sqlite.inserted.pickle')
 def insert_drms_AR_into_sqlite(infile, outfile):
@@ -250,7 +251,7 @@ def insert_drms_AR_into_sqlite(infile, outfile):
 if __name__ == "__main__":
     # pipeline_run([make_request], multiprocess = 10)
 
-    pipeline_run([insert_drms_AR_into_sqlite], multiprocess = 1)
+    pipeline_run([insert_drms_AR_into_sqlite], multiprocess = 4)
     # pipeline_run([insert_aia_availability_into_sqlite], multiprocess = 1) 	
 
 
