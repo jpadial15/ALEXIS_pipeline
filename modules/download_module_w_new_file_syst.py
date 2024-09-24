@@ -330,7 +330,7 @@ def download_url(all_path_info_w_config):
 
             # this_file = f'~/jorge-helio/argonne_files/no_space_error_cache/{output}.txt'
 
-            this_file = f'/home/padialjr/jorge-helio/argonne_files/bad_download_cache/{output}'
+            this_file = f'{dataconfig.image}/bad_download_cache/{output}'
 
             os.system(f'touch {this_file}')
 
