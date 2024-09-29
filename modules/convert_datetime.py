@@ -17,6 +17,14 @@ def str_to_pythondatetime(time_str):
 
     return(datetime_obj)
 
+def str_w_Z_at_end_to_pythondatetime(time_str):
+
+    time_str_wo_Z = time_str[:-1]
+
+    datetime_obj = datetime.strptime(time_str_wo_Z,'%Y-%m-%dT%H:%M:%S.%f' )
+
+    return(pd.Timestamp(datetime_obj, tz = 'utc'))
+
 def pythondatetime_to_astropytime(datetime_obj):
 
     astropy_time_obj = Time(datetime_obj, scale = 'utc')
