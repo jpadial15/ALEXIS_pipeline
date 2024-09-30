@@ -245,14 +245,16 @@ def insert_drms_AR_into_sqlite(infile, outfile):
     else:
         pickle.dump(pd.DataFrame(), open(outfile, 'wb'))
 
-
-
-
-if __name__ == "__main__":
-    # pipeline_run([make_request], multiprocess = 10)
+def main():
+        # pipeline_run([make_request], multiprocess = 10)
 
     pipeline_run([insert_drms_AR_into_sqlite], multiprocess = 4)
     # pipeline_run([insert_aia_availability_into_sqlite], multiprocess = 1) 	
 
 
     # pipeline_run([insert_zerocross_to_sqlite], multiprocess = 1, verbose = 4)
+    
+if __name__ == "__main__":
+  main()
+
+
