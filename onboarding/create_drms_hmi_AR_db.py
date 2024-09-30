@@ -165,7 +165,7 @@ def dl_params():
 
         out_name = make_drms_ar_availability_filename(jsoc_query)
 
-        outfile = tw(f'{out_name}_drms_dmi_AR.df.pickle')
+        outfile = tw(f'{out_name}_drms_hmi_AR.df.pickle')
 
         yield(infile, outfile, jsoc_query)
 
@@ -183,12 +183,23 @@ def make_request(infile, outfile, jsoc_query):
 
         output_df = prep_hmi_AR_drms_df(hmi_ar_query_df)
 
-
         pickle.dump(output_df, open(outfile, 'wb'))
     
     else:
 
         print(f'no data for {jsoc_query}')
+
+        # cache searches that are empty
+
+        cache_dir = f'{WORKING_DIR}/no_data_dir/'
+
+        os.makedirs(cache_dir, exist_ok=True) 
+
+        file_reg_exp = re.findall(r'\d{4}.\d{2}.\d{2}-\d{4}.\d{2}.\d{2}_drms_hmi_AR.df.pickle', outfile )[0]
+
+        cache_missing_file_name = os.path.join(cache_dir, file_reg_exp)
+
+        with open(cache_missing_file_name, 'a'): os.utime(cache_missing_file_name, None)
 
         pickle.dump(hmi_ar_query_copy, open(outfile, 'wb'))
 
