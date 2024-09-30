@@ -2,7 +2,9 @@ import os
 
 
 HOME_DIR = '/home/padialjr/ALEXIS_pipeline'
+
 MAIN_DIR_NEW = '/home/padialjr/ALEXIS_pipeline'
+
 MAIN_DATA_DIR = '/mnt/e/ALEXIS_data'
 
 #############################################
@@ -19,13 +21,12 @@ DATA_DIR_HMI_HEK_AR = f'{MAIN_DIR_NEW}/hmi_hek_ar'
 
 DATA_DIR_FLARE_CANDIDATES = f'{MAIN_DIR_NEW}/flare_candidates'
 
-DATA_DIR_HMI_DRMS = f'{MAIN_DIR_NEW}/hmi_drms_ar'
-
 DATA_DIR_PLOTS = f'{MAIN_DIR_NEW}/PLOTS'
 
+# paths that live on harddrive
 DATA_DIR_IMG_DATA = f'{MAIN_DATA_DIR}'
 
-# paths that live on harddrive
+DATA_DIR_HMI_DRMS = f'{MAIN_DATA_DIR}/hmi_drms_ar'
 
 DATA_DIR_HEK_FLARES = f'{MAIN_DATA_DIR}/hek_flares_data'
 
