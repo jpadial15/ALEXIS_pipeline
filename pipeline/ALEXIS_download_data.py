@@ -25,7 +25,7 @@ from modules import download_module_w_new_file_syst
 from modules import query_the_data
 import dataconfig
 from modules import convert_datetime
-import helio_reg_exp_module
+from modules import helio_reg_exp_module
 from glob import glob
 
 
