@@ -307,72 +307,72 @@ pipeline_run([file_size_and_speed_w_single_image_peakfinder], multiprocess = 64,
 
 # pipeline_run([insert_image_downloaded_availability_into_sqlite], multiprocess = 20, verbose = 1)
 
-# ##################################################
-# ### data has been downloaded, parsed, and cleaned
-# ### insert into SQLITE database
-# ##################################################
+##################################################
+### data has been downloaded, parsed, and cleaned
+### insert into SQLITE database
+##################################################
 
-# import json
-# import sqlalchemy as sa
+import json
+import sqlalchemy as sa
 
-# engine = sa.create_engine(f'sqlite:////{dataconfig.DATA_DIR_PRODUCTS}/image_data_availability.db', echo=False)
-# metadata = sa.MetaData()
+engine = sa.create_engine(f'sqlite:////{dataconfig.DATA_DIR_PRODUCTS}/image_data_availability.db', echo=False)
+metadata = sa.MetaData()
 
-# image_data_availability = sa.Table(
-#     'image_data_availability', metadata,
-#     sa.Column('download_string', sa.types.String()),
-#     sa.Column('time_stamp', sa.types.Float(), index=True),
-#     sa.Column('data_level', sa.types.String()),
-#     sa.Column('file_name', sa.types.String()),  # Added index on file_name
-#     sa.Column('exp_time', sa.types.Float()),
-#     sa.Column('file_size_MB', sa.types.Float()),
-#     sa.Column('QUALITY', sa.types.Float()),
-#     sa.Column('wavelength', sa.types.Integer()),
-#     sa.Column('url', sa.types.String()),
-#     sa.Column('instrument', sa.types.String(), index=True),
-#     sa.Column('file_path', sa.types.String()),
-#     sa.Column('wget_log_file', sa.types.String()),
-#     sa.Column('download_speed', sa.types.String()),
-#     sa.Column('cached_dict_path', sa.types.String()),
-#     sa.Column('file_size_MB', sa.types.Float()),
-#     sa.Column('telescope', sa.types.String()),
-#     sa.Column('img_data_max', sa.types.Float()),
-#     sa.Column('img_data_min', sa.types.Float()),
-#     sa.Column('img_flux', sa.types.Float()),
-#     sa.Column('peakfinder_time_1', sa.types.Float()),
-#     sa.Column('dbscan_time_1', sa.types.Float()),
-#     sa.Column('cleaning_time_1', sa.types.Float()),
-#     sa.Column('peaks_found', sa.types.Boolean()),
-#     sa.Column('dbscan_1_x_hpc', sa.types.Float()),
-#     sa.Column('dbscan_1_y_hpc', sa.types.Float()),
-#     sa.Column('dbscan_1_x_pix', sa.types.Float()),
-#     sa.Column('dbscan_1_y_pix', sa.types.Float()),
-#     sa.Column('dbscan_1_num_members', sa.types.Float()),
-#     sa.Column('dbscan_time_1', sa.types.Float()),
-#     sa.Column('dbscan_1_label', sa.types.Float())
-# )
-
-
-
-# @jobs_limit(1)
-# @transform(file_size_and_speed_w_single_image_peakfinder, suffix('.parsed_downloader_w_single_peakfinder.pickle'), '.sqlite_inserted.pickle')
-# def insert_image_downloaded_availability_into_sqlite(infile, outfile):
-
-#     infile_df = pickle.load(open(infile, 'rb'))
-
-#     infile_to_dict = infile_df.to_dict('records')
-
-#     metadata.create_all(engine)
-
-#     conn = engine.connect()
-
-#     conn.execute(image_data_availability.insert(), infile_to_dict)
-
-#     pickle.dump(infile_to_dict, open(outfile, 'wb'))
+image_data_availability = sa.Table(
+    'image_data_availability', metadata,
+    sa.Column('download_string', sa.types.String()),
+    sa.Column('time_stamp', sa.types.Float(), index=True),
+    sa.Column('data_level', sa.types.String()),
+    sa.Column('file_name', sa.types.String()),  # Added index on file_name
+    sa.Column('exp_time', sa.types.Float()),
+    sa.Column('file_size_MB', sa.types.Float()),
+    sa.Column('QUALITY', sa.types.Float()),
+    sa.Column('wavelength', sa.types.Integer()),
+    sa.Column('url', sa.types.String()),
+    sa.Column('instrument', sa.types.String(), index=True),
+    sa.Column('file_path', sa.types.String()),
+    sa.Column('wget_log_file', sa.types.String()),
+    sa.Column('download_speed', sa.types.String()),
+    sa.Column('cached_dict_path', sa.types.String()),
+    sa.Column('file_size_MB', sa.types.Float()),
+    sa.Column('telescope', sa.types.String()),
+    sa.Column('img_data_max', sa.types.Float()),
+    sa.Column('img_data_min', sa.types.Float()),
+    sa.Column('img_flux', sa.types.Float()),
+    sa.Column('peakfinder_time_1', sa.types.Float()),
+    sa.Column('dbscan_time_1', sa.types.Float()),
+    sa.Column('cleaning_time_1', sa.types.Float()),
+    sa.Column('peaks_found', sa.types.Boolean()),
+    sa.Column('dbscan_1_x_hpc', sa.types.Float()),
+    sa.Column('dbscan_1_y_hpc', sa.types.Float()),
+    sa.Column('dbscan_1_x_pix', sa.types.Float()),
+    sa.Column('dbscan_1_y_pix', sa.types.Float()),
+    sa.Column('dbscan_1_num_members', sa.types.Float()),
+    sa.Column('dbscan_time_1', sa.types.Float()),
+    sa.Column('dbscan_1_label', sa.types.Float())
+)
 
 
 
-# pipeline_run([insert_image_downloaded_availability_into_sqlite], multiprocess = 20, verbose = 1)
+@jobs_limit(1)
+@transform(file_size_and_speed_w_single_image_peakfinder, suffix('.parsed_downloader_w_single_peakfinder.pickle'), '.sqlite_inserted.pickle')
+def insert_image_downloaded_availability_into_sqlite(infile, outfile):
+
+    infile_df = pickle.load(open(infile, 'rb'))
+
+    infile_to_dict = infile_df.to_dict('records')
+
+    metadata.create_all(engine)
+
+    conn = engine.connect()
+
+    conn.execute(image_data_availability.insert(), infile_to_dict)
+
+    pickle.dump(infile_to_dict, open(outfile, 'wb'))
+
+
+
+pipeline_run([insert_image_downloaded_availability_into_sqlite], multiprocess = 20, verbose = 1)
 
 
 
