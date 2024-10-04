@@ -1,15 +1,20 @@
 import re 
+import sys 
+import os 
+sys.path.insert(1, '..')
+sys.path.insert(2, '../modules/')
 from glob import glob
 import numpy as np
 import re
-import os
 import pickle
-import dataconfig_argonne as dataconfig
+import dataconfig
 import pandas as pd
-import helio_reg_exp_module
-import query_the_data
-import check_data_qual_module_02
+from modules import helio_reg_exp_module
+from modules import query_the_data
 
+# need to import to github
+# from modules import check_data_qual_module_02
+import check_data_qual_module_02
 
 # some functions for pipeline
 
@@ -38,29 +43,43 @@ tw = lambda x: os.path.join(WORKING_DIR, x)
 # workdir variable
 WORKING_DIR = dataconfig.DATA_DIR_FLARE_CANDIDATES
 
+flare_candidate_dir = dataconfig.DATA_DIR_FLARE_CANDIDATES
+flare_candidate_dir
+WD_already_done = glob(f'{flare_candidate_dir}/*.working')
 
-# load flare_list from differential analysis of XRS data and aggregate to SolarSoft and SWPC
+this_wd_list = ([helio_reg_exp_module.work_dir_from_flare_candidate_input_string(this_wd_path) for this_wd_path in WD_already_done])
+this_merged_datetime = [helio_reg_exp_module.date_time_from_flare_candidate_working_dir(this_wd) for this_wd in this_wd_list]
+this_class = [helio_reg_exp_module.flare_class_from_flare_candidate_working_dir(this_wd) for this_wd in this_wd_list]
+ouput_dict_list = [{'merged_datetime': this_datetime, 'merged_class': this_class} for this_datetime, this_class in zip(this_merged_datetime, this_class)]
+output_df = pd.DataFrame(ouput_dict_list)
 
-flare_list = pickle.load(open(f'{dataconfig.DATA_DIR_PRODUCTS}/agg_flare_df.pickle', 'rb'))
+THESE_FLARES = pd.concat([output_df])
 
-# all_examples_for_argonne = flare_list[(flare_list.id_tuple == (1,1,1)) | (flare_list.id_tuple == (1,0,1)) | (flare_list.id_tuple == (1,1,0))] # uncomment for full argonne sample
-all_examples_for_argonne = flare_list # place holder for when you uncomment above line. 
+do_these_flares = THESE_FLARES
 
-# make sure that we are making a letter-float and not letter-integer
-all_examples_for_argonne['merged_class'] = [convert_int_class_to_float(this_class) for this_class in all_examples_for_argonne.merged_class]
 
-# make working directory paths
-all_examples_for_argonne['working_dir'] = [tw(create_working_dir(this_class, this_time)) for this_class, this_time in zip(all_examples_for_argonne['merged_class'], all_examples_for_argonne['merged_datetime'])]
+# # load flare_list from differential analysis of XRS data and aggregate to SolarSoft and SWPC
 
-##### limit this run to WD we have on lift. Comment up to here for full argonne sample. 
+# flare_list = pickle.load(open(f'{dataconfig.DATA_DIR_PRODUCTS}/agg_flare_df.pickle', 'rb'))
 
-# load the working_dir for lift3 proof of concept
-lift_flares = pickle.load(open('/home/padialjr/jorge-helio/argonne_files/movie_wd_file_list.pickle', 'rb'))
+# # all_examples_for_argonne = flare_list[(flare_list.id_tuple == (1,1,1)) | (flare_list.id_tuple == (1,0,1)) | (flare_list.id_tuple == (1,1,0))] # uncomment for full argonne sample
+# all_examples_for_argonne = flare_list # place holder for when you uncomment above line. 
 
-# parse lift path to return just the working directory
-test_dir_list = [helio_reg_exp_module.work_dir_from_flare_candidate_input_string(this_file) for this_file in lift_flares]
+# # make sure that we are making a letter-float and not letter-integer
+# all_examples_for_argonne['merged_class'] = [convert_int_class_to_float(this_class) for this_class in all_examples_for_argonne.merged_class]
 
-do_these_directories = pd.concat([all_examples_for_argonne[all_examples_for_argonne.working_dir == tw(this_dir)] for this_dir in test_dir_list])
+# # make working directory paths
+# all_examples_for_argonne['working_dir'] = [tw(create_working_dir(this_class, this_time)) for this_class, this_time in zip(all_examples_for_argonne['merged_class'], all_examples_for_argonne['merged_datetime'])]
+
+# ##### limit this run to WD we have on lift. Comment up to here for full argonne sample. 
+
+# # load the working_dir for lift3 proof of concept
+# lift_flares = pickle.load(open('/home/padialjr/jorge-helio/argonne_files/movie_wd_file_list.pickle', 'rb'))
+
+# # parse lift path to return just the working directory
+# test_dir_list = [helio_reg_exp_module.work_dir_from_flare_candidate_input_string(this_file) for this_file in lift_flares]
+
+# do_these_directories = pd.concat([all_examples_for_argonne[all_examples_for_argonne.working_dir == tw(this_dir)] for this_dir in test_dir_list])
 
 ##### limit this run to WD we have on lift. Comment section above to create all WD for full argonne sample
 
