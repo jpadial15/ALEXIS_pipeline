@@ -12,10 +12,22 @@ import pandas as pd
 from modules import helio_reg_exp_module
 from modules import query_the_data
 
-# need to import to github
-# from modules import check_data_qual_module_02
-import check_data_qual_module_02
+import pytz
+from datetime import datetime
 
+import warnings
+warnings.filterwarnings("ignore")
+# need to import to github
+from modules import check_data_qual_module_02
+# import check_data_qual_module_02
+# Get the CST timezone
+cst = pytz.timezone('US/Central')
+
+# Get the current time in the CST timezone
+current_time_start = datetime.now(cst)
+
+# Print the current time in the CST timezone
+print("Current time start in CST timezone:", current_time_start.strftime("%Y-%m-%d %H:%M:%S %Z"))
 # some functions for pipeline
 
 def convert_int_class_to_float(flare_class):
@@ -47,11 +59,16 @@ flare_candidate_dir = dataconfig.DATA_DIR_FLARE_CANDIDATES
 flare_candidate_dir
 WD_already_done = glob(f'{flare_candidate_dir}/*.working')
 
-this_wd_list = ([helio_reg_exp_module.work_dir_from_flare_candidate_input_string(this_wd_path) for this_wd_path in WD_already_done])
-this_merged_datetime = [helio_reg_exp_module.date_time_from_flare_candidate_working_dir(this_wd) for this_wd in this_wd_list]
-this_class = [helio_reg_exp_module.flare_class_from_flare_candidate_working_dir(this_wd) for this_wd in this_wd_list]
-ouput_dict_list = [{'merged_datetime': this_datetime, 'merged_class': this_class} for this_datetime, this_class in zip(this_merged_datetime, this_class)]
-output_df = pd.DataFrame(ouput_dict_list)
+# print(WD_already_done)
+
+# this_wd_list = ([helio_reg_exp_module.work_dir_from_flare_candidate_input_string(this_wd_path) for this_wd_path in WD_already_done])
+this_merged_datetime = [helio_reg_exp_module.date_time_from_flare_candidate_working_dir(this_wd) for this_wd in WD_already_done]
+this_class = [helio_reg_exp_module.flare_class_from_flare_candidate_working_dir(this_wd) for this_wd in WD_already_done]
+
+THESE_FLARES_ARGONNE_dict = [{'merged_datetime':this_time,'merged_class': this_class, 'working_dir': this_wd} for this_time, this_class, this_wd in zip(this_merged_datetime, this_merged_datetime,WD_already_done)]
+
+# ouput_dict_list = [{'merged_datetime': this_datetime, 'merged_class': this_class} for this_datetime, this_class in zip(this_merged_datetime, this_class)]
+output_df = pd.DataFrame(THESE_FLARES_ARGONNE_dict)
 
 THESE_FLARES = pd.concat([output_df])
 
@@ -158,13 +175,16 @@ def decide_good_qual_wavelength_instr_pairs_per_work_dir(row):
             pickle.dump(output_masked_single_files, open(single_output_file_name, 'wb'))
 
     else:
+        print(f'init files already made: {work_dir}')
+
         pass
-        #print(f'init files already made: {work_dir}')
 
 
 # # parse which working directories have data that are usable and begin 
 # # analysis
 for _, row in do_these_flares.iterrows():
+
+    # print(row)
 
     decide_good_qual_wavelength_instr_pairs_per_work_dir(row)
 
