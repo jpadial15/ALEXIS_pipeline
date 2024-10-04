@@ -15,6 +15,7 @@ import sqlalchemy as sa
 import warnings
 warnings.filterwarnings("ignore")
 import numpy as np
+from glob import glob
 
 # argonne libraries
 
@@ -24,6 +25,8 @@ from modules import download_module_w_new_file_syst
 from modules import query_the_data
 import dataconfig
 from modules import convert_datetime
+import helio_reg_exp_module
+from glob import glob
 
 
 
@@ -44,34 +47,110 @@ def convert_int_class_to_float(flare_class):
     return(flare_class)
 
 #########
-
+#### UNDER THIS CODE, WE USE AGG_FLARE_DF.pickle ######
 # load flare_list from differential analysis of XRS data and aggregate to SolarSoft and SWPC
 
-flare_list = pickle.load(open(f'{dataconfig.DATA_DIR_PRODUCTS}/agg_flare_df.pickle', 'rb'))
+# flare_list = pickle.load(open(f'{dataconfig.DATA_DIR_PRODUCTS}/agg_flare_df.pickle', 'rb'))
 
-# make sure that we are making a letter-float and not letter-integer
-flare_list['merged_class'] = [convert_int_class_to_float(this_class) for this_class in flare_list.merged_class]
+# # make sure that we are making a letter-float and not letter-integer
+# flare_list['merged_class'] = [convert_int_class_to_float(this_class) for this_class in flare_list.merged_class]
 
-# mask for flares everyone agrees on
-flares_111 = flare_list[flare_list.id_tuple == (1,1,1)].reset_index(drop = True).sort_values(by = 'merged_datetime')
+# # mask for flares everyone agrees on
+# flares_111 = flare_list[flare_list.id_tuple == (1,1,1)].reset_index(drop = True).sort_values(by = 'merged_datetime')
 
-# mask for flares everyone agrees on
-flares_101 = flare_list[flare_list.id_tuple == (1,0,1)].reset_index(drop = True).sort_values(by = 'merged_datetime')
+# # mask for flares everyone agrees on
+# flares_101 = flare_list[flare_list.id_tuple == (1,0,1)].reset_index(drop = True).sort_values(by = 'merged_datetime')
 
-flares_110 = flare_list[flare_list.id_tuple == (1,1,0)].reset_index(drop = True).sort_values(by = 'merged_datetime')
+# flares_110 = flare_list[flare_list.id_tuple == (1,1,0)].reset_index(drop = True).sort_values(by = 'merged_datetime')
 
-ALL_FLARES = pd.concat([flares_111, flares_101, flares_110])
+# ALL_FLARES = pd.concat([flares_111, flares_101, flares_110])
 
-THESE_FLARES = ALL_FLARES.drop_duplicates(subset=['merged_datetime'])
+# THESE_FLARES = ALL_FLARES.drop_duplicates(subset=['merged_datetime'])
 
 # create dictionaries for downloading data
+#### UNDER THIS CODE, WE USE AGG_FLARE_DF.pickle ######
+
+# user input time in the following format 'YYYY-MM-DD HH:MM:SS.ff' in UTC
+input_time_list = ['2011-02-08 21:11:00.08']
+# input_time_list = ['2011-02-08 21:11:00.08', '2011-11-14 20:12:30.25']
+
+this_time_list = [pd.Timestamp(input_time, tz='UTC') for input_time in input_time_list]
+
+input_class_list = ['C4.0']
+# input_class_list = ['C4.0', 'C1.8']
+
+def convert_int_class_to_float(flare_class):
+
+    """ 
+        make sure flare class is not C1 or M1 but C1.0 or M1.0 etc.
+    """
+    
+    if len(flare_class) == 2:
+        flare_letter = flare_class[:1]
+        flare_number = np.float(flare_class[1:])
+        flare_class = f'{flare_letter}{flare_number}'
+
+    return(flare_class)
+
+def create_working_dir(flare_class, flare_time):
+    this_file_time = f'{flare_time:%Y-%m-%dT%H_%M_%S_%f}'[:-4] # cut the milisecond precision to seconds
+    name_of_directory = f'flarecandidate_{flare_class}_at_{this_file_time}.working'
+    return(name_of_directory)
+
+tw = lambda x: os.path.join(WORKING_DIR, x)
+
+## end of some functions
+
+# workdir variable
+WORKING_DIR = dataconfig.DATA_DIR_FLARE_CANDIDATES
+
+THESE_FLARES_ARGONNE_dict = [{'merged_datetime':this_time,'merged_class': this_class, 'working_dir':  tw(create_working_dir(this_class, this_time))} for this_time, this_class in zip(this_time_list, input_class_list)]
+
+THESE_FLARES = pd.DataFrame(THESE_FLARES_ARGONNE_dict)
+
+# keep track of flare number w/ k
+
+flare_candidate_dir = dataconfig.DATA_DIR_FLARE_CANDIDATES
+flare_candidate_dir
+WD_already_done = glob(f'{flare_candidate_dir}/*.working')
+
+k = len(WD_already_done)
+
+def make_wd_if_wd_not_there(directory):
+
+    if not os.path.exists(directory):
+        # Create the directory
+        os.makedirs(directory)
+        # os.makedirs(self.MAIN_DL_DIRECTORY)
+        print(f'Directory "{directory}" created.')
+        return(directory)
+    else:
+        pass
+
+wd_made = [make_wd_if_wd_not_there(this_wd) for this_wd in THESE_FLARES.working_dir]
+
+# if k > 1:
+#     # EXPAND THESE_FLARES
+
+#     this_wd_list = ([helio_reg_exp_module.work_dir_from_flare_candidate_input_string(this_wd_path) for this_wd_path in WD_already_done])
+
+#     this_merged_datetime = [helio_reg_exp_module.date_time_from_flare_candidate_working_dir(this_wd) for this_wd in this_wd_list]
+
+#     this_class = [helio_reg_exp_module.flare_class_from_flare_candidate_working_dir(this_wd) for this_wd in this_wd_list]
+
+#     ouput_dict_list = [{'merged_datetime': this_datetime, 'merged_class': this_class} for this_datetime, this_class in zip(this_merged_datetime, this_class)]
+
+#     output_df = pd.DataFrame(ouput_dict_list)
+
+#     THESE_FLARES = pd.concat([THESE_FLARES, output_df])
+
+
 
 DL_DATASETS = []
-# keep track of flare number w/ k
-k  = 0
+
 for flare_candidate in THESE_FLARES.itertuples():
 
-    data_directory = f'{dataconfig.MAIN_DIR}/image_data'
+    # data_directory = f'{dataconfig.MAIN_DIR}/image_data'
 
     the_timestamp = flare_candidate.merged_datetime
 
@@ -80,32 +159,35 @@ for flare_candidate in THESE_FLARES.itertuples():
     # save aia_sql result with filename instead of file_name. Change in order to continue
     aia_avail_df.rename(columns = {'filename':'file_name'}, inplace = True)
 
-    sxi_avail_df = query_the_data.sxi_availability_sql_db(input_datetime = the_timestamp, query_time = 40) #query_time must be given in minutes
+    # sxi_avail_df = query_the_data.sxi_availability_sql_db(input_datetime = the_timestamp, query_time = 40) #query_time must be given in minutes
 
     # #sci qual SXI is data_level == 'BA'
-    sci_qual_sxi_df = sxi_avail_df[sxi_avail_df.data_level == 'BA']
+    # sci_qual_sxi_df = sxi_avail_df[sxi_avail_df.data_level == 'BA']
 
-    sci_qual_sxi_df['url'] = [re.search(r'ftp://satdat.ngdc.noaa.gov/sxi/archive/fits/goes\d{2}/\d{4}/\d{2}/\d{2}/SXI_\d{8}_\d{9}_BA_\d{2}.FTS', this_download_string).group(0) for this_download_string in sci_qual_sxi_df.download_string]
+    # sci_qual_sxi_df['url'] = [re.search(r'ftp://satdat.ngdc.noaa.gov/sxi/archive/fits/goes\d{2}/\d{4}/\d{2}/\d{2}/SXI_\d{8}_\d{9}_BA_\d{2}.FTS', this_download_string).group(0) for this_download_string in sci_qual_sxi_df.download_string]
     # [re.search(r'https:\/\/www.ncei.noaa.gov\/data\/goes-solar-xray-imager\/access\/fits\/goes\d{2}\/\d{4}\/\d{2}\/\d{2}\/SXI_\d{8}_\d{9}_[A-B][A-B]_\d{2}.FTS', this_download_string).group(0) for this_download_string in available_data_df.download_string]
 
     #drop columns to make aia and SXI the same dictionaries
 
-    PASS_THIS_SXI = sci_qual_sxi_df.drop(['download_string', 'data_level', 'instrument'], axis = 1)
+    # PASS_THIS_SXI = sci_qual_sxi_df.drop(['download_string', 'data_level', 'instrument'], axis = 1)
 
     PASS_THIS_AIA = aia_avail_df.drop(['EXPTIME', 'QUALITY', 'WAVELNTH'], axis = 1)
 
 
-    lst_concat_df = pd.concat([PASS_THIS_SXI, PASS_THIS_AIA])
+    # lst_concat_df = pd.concat([PASS_THIS_SXI, PASS_THIS_AIA])
+
+    lst_concat_df = PASS_THIS_AIA
+
 
     lst_concat_df['entry_num'] = [k for _ in lst_concat_df.url]
 
     # lst_concat_df = aia_avail_df
 
-    k = k + 1
+    # k = k + 1
 
     DL_DATASETS.append(lst_concat_df)
 
-
+k = k + 1
 # all data has been found, concat into dataframe of every single file
 THESE_DF = pd.concat(DL_DATASETS)
 
@@ -113,20 +195,9 @@ THESE_DF = pd.concat(DL_DATASETS)
 
 not_duplicated_urls = THESE_DF.drop_duplicates(subset=['url']).reset_index(drop = True)
 
-
-
-# take out file that is failing to see if that helps w the errno28: no space left on device
-
-#not_duplicated_urls = not_duplicated_urls[not_duplicated_urls.url !='http://jsoc.stanford.edu/SUM35/D516428691/S00000/image_lev1.fits']
-
-# ######
-# # download_these are the dictionaries which are equal to the config files
-# # for download for unique url's
-
 download_these = not_duplicated_urls.to_dict('records')
 
-print('done finding files')
-
+print(f'YOU HAVE A TOTAL of {download_these} that will be verified for integrity.')
 
 # #####
 def dl_params():
@@ -248,7 +319,7 @@ def download_data(infile, outfile, config): #function 1
 
 #pipeline_run([download_data], multiprocess = 2, verbose = 1, touch_files_only = CHECKSUM_REGENERATE)
 
-pipeline_run([download_data], multiprocess = 10, verbose = 3)
+pipeline_run([download_data], multiprocess = 10, verbose = 1)
 
 
 
