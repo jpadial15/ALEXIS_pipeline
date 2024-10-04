@@ -36,7 +36,7 @@ import sxi_module
 # from astropy.wcs import WCS
 # from reproject import reproject_interp
 from astropy.io import fits
-# from astropy import units as u
+from astropy import units as u
 import sunpy.map
 
 from aiapy.calibrate import correct_degradation, normalize_exposure, register, update_pointing
@@ -46,8 +46,9 @@ from aiapy.calibrate.util import get_correction_table, get_pointing_table
 # from random import randint
 # import sunpy
 
-
+import convert_datetime
 import sys
+import helio_reg_exp_module
 
 
 load_data_end = datetime.now(cst)
@@ -295,32 +296,35 @@ def clean_aia_data(config):
 
         CHECK_CORRECT_EXIST = os.path.isfile(correction_table_file_path)
 
-        # start = convert_datetime.pythondatetime_to_astropytime(pd.Timestamp('2010-05-01T00:00:00', tz = 'utc'))
+        start = convert_datetime.pythondatetime_to_astropytime(pd.Timestamp('2010-05-01T00:00:00', tz = 'utc'))
 
-        # end = convert_datetime.pythondatetime_to_astropytime(pd.Timestamp('2020-05-01T23:59:59', tz = 'utc')) 
+        end = convert_datetime.pythondatetime_to_astropytime(pd.Timestamp('2020-05-01T23:59:59', tz = 'utc')) 
 
 
         if not CHECK_POINT_EXIST:
             print('no AIA pointing table')
-            sys.exit()
-        #         # print('RUNNING')
-        #         # start = convert_datetime.pythondatetime_to_astropytime(flare_candidate_date_time) - 3*u.h
+            # sys.exit()
+                # print('RUNNING')
 
-        #         # end = convert_datetime.pythondatetime_to_astropytime(flare_candidate_date_time) + 3*u.h
+            # flare_candidate_date_time = helio_reg_exp_module.date_time_from_flare_candidate_working_dir(this_dir)
+            
+            # start = convert_datetime.pythondatetime_to_astropytime(flare_candidate_date_time) - 3*u.h
 
-        #         pointing_table = get_pointing_table(start,end)
+            # end = convert_datetime.pythondatetime_to_astropytime(flare_candidate_date_time) + 3*u.h
 
-        #         pickle.dump(pointing_table, open(pointing_table_file_path, 'wb'))
+            pointing_table = get_pointing_table(start,end)
+
+            pickle.dump(pointing_table, open(pointing_table_file_path, 'wb'))
 
         if not CHECK_CORRECT_EXIST:
 
             print('no AIA correction table')
-            sys.exit()
-        #         # print('RUNNING')
-        # # The same applies for the correction table.
-        #         correction_table = get_correction_table()
+            # sys.exit()
+                # print('RUNNING')
+        # The same applies for the correction table.
+            correction_table = get_correction_table()
 
-        #         pickle.dump(correction_table, open(correction_table_file_path, 'wb'))
+            pickle.dump(correction_table, open(correction_table_file_path, 'wb'))
 
 
 
@@ -330,7 +334,9 @@ def clean_aia_data(config):
 
     # ###################################################3
     # ######### CLEAN AIA DATA WITH POINTER AND CONTAMINATION####
-    # working_dir = config['working_dir']
+
+    # print(config)
+    # image_directory = config['working_dir']
 
     image_directory = dataconfig.DATA_DIR_IMG_DATA
 
