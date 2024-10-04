@@ -41,6 +41,8 @@ DATA_DIR_ZERO_CROSS = f'{MAIN_DATA_DIR}/zero_cross_data'
 
 DATA_DIR_IMG_RUFFUS_OUTPUT = f'{DATA_DIR_IMG_DATA}/ruffus_output_files'
 
+DATA_DIR_IMG_FITS_DATA = f'{DATA_DIR_IMG_DATA}/fits_data'
+
 DATA_DIR_AIA = f'{MAIN_DATA_DIR}/aia_data'
 
 RUFFUS_SQLITE_CHECKPOINT_DIR = f'{HOME_DIR}/ruffus_sqlite_checkpoints'
