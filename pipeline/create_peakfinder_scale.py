@@ -1,3 +1,7 @@
+import sys 
+import os 
+sys.path.insert(1, '..')
+sys.path.insert(2, '../modules/')
 from glob import glob
 import re
 import pickle
@@ -12,7 +16,7 @@ import sqlalchemy as sql
 import re
 import warnings
 
-from create_aia_12s_availability import DATA_PRODUCT_DIR
+# from create_aia_12s_availability import DATA_PRODUCT_DIR
 warnings.filterwarnings("ignore")
 from astropy.io import fits
 from skimage.feature import peak_local_max
@@ -23,7 +27,7 @@ from sklearn.cluster import DBSCAN
 from scipy.stats import linregress
 
 from skimage.transform import rotate
-import ALEXIS_03_create_hek_report_module
+
 
 
 import matplotlib.pyplot as plt
@@ -34,34 +38,32 @@ from scipy.signal import find_peaks
 
 import sys
 
-import associate_HARP_to_flare_region_module
+# import associate_HARP_to_flare_region_module
 
 from astropy.coordinates import SkyCoord
 
 import scipy.stats
 from scipy.stats import mstats
 from sklearn.metrics import mean_squared_error
-import query_the_data
+from modules import query_the_data
 
-import aia_module
+# import aia_module
 
 import dataconfig
-import convert_datetime
+from modules import convert_datetime
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 
-import clean_img_data_02
 
 from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KernelDensity
 
-import sxi_module
 from time import sleep
 from random import randint
 
 from aiapy.calibrate.util import get_correction_table, get_pointing_table
 
-import helio_reg_exp_module
+from modules import helio_reg_exp_module
 
 import itertools
 from scipy.optimize import nnls
@@ -70,13 +72,11 @@ import cvxpy as cp
 
 from sunpy.coordinates import frames
 
-import coordinate_conversion_module
 
 from sklearn.metrics import mean_squared_error 
 import ast
 import itertools
 
-import convex_fits_and_filtering_module
 
 from scipy.spatial import KDTree
 
@@ -85,15 +85,22 @@ import scipy.stats
 from scipy.stats import mstats
 from sklearn.metrics import mean_squared_error
 
-import convex_fits_and_filtering_module
 
-import associate_HARP_to_flare_region_module
+# import associate_HARP_to_flare_region_module
+
+
+# import check_data_qual_module_02
+# need to bring to github
+
+import clean_img_data_02
+
+import convex_fits_and_filtering_module
 
 import associate_candidates_to_flare_meta_module
 
-import check_data_qual_module_02
-
 import LASSO_metrics_module
+
+import ALEXIS_03_create_hek_report_module
 
 import ALEXIS_02_define_ALEXIS_flares_module
 
@@ -101,7 +108,12 @@ import ALEXIS_02_associate_flare_to_harp_module
 
 import ALEXIS_02_define_goes_class_module
 
-import ALEXIS_02_plotting_module_movie
+import coordinate_conversion_module
+
+import sxi_module
+
+
+# import ALEXIS_02_plotting_module_movie
 
 
 ###################################################################################################
