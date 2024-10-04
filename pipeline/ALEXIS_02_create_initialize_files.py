@@ -33,7 +33,7 @@ from ruffus import *
 # import sqlalchemy as sa
 
 # from astropy.io import fits
-
+from astropy import units as u
 # import joblibs
 # import requests
 
@@ -48,7 +48,7 @@ from modules import clean_img_data_02
 
 # import check_data_qual_module_02
 
-# from glob import glob
+from glob import glob
 
 # import numpy as np
 
@@ -208,7 +208,7 @@ print(f'loaded libraries MAIN2: {load_data_end - load_data_start}')
 ##################################################################################################
 ##################################################################################################
 
-# download_data = glob(f'{dataconfig.DATA_DIR_IMG_RUFFUS_OUTPUT}/*/*.downloaded')[:1000]
+download_data = glob(f'{dataconfig.DATA_DIR_IMG_RUFFUS_OUTPUT}/*/*.downloaded')
 
 
 ##################################################################################################
@@ -233,12 +233,14 @@ load_data_start = datetime.now(cst)
 
 
 # need to add glob function or something. Maybe based on working dir?
-download_data = pickle.load(open(os.path.join(dataconfig.DATA_DIR_PRODUCTS, 'downloaded_data_list.pickle'), 'rb'))[start:end]
+# download_data = pickle.load(open(os.path.join(dataconfig.DATA_DIR_PRODUCTS, 'downloaded_data_list.pickle'), 'rb'))[start:end]
 
 
 load_data_end = datetime.now(cst)
 
 print(f'list of data added: {load_data_end - load_data_start}')
+
+print(len(download_data))
 
 # os.system(f'echo file ran')
 ##################################################################################################
@@ -295,7 +297,7 @@ def file_size_and_speed_w_single_image_peakfinder(infile, outfile):
 
 
 
-pipeline_run([file_size_and_speed_w_single_image_peakfinder], multiprocess = 64, verbose = 1)
+# pipeline_run([file_size_and_speed_w_single_image_peakfinder], multiprocess = 8, verbose = 1)
 
 # print((all_end-all_start)/60)
 
@@ -372,7 +374,7 @@ def insert_image_downloaded_availability_into_sqlite(infile, outfile):
 
 
 
-pipeline_run([insert_image_downloaded_availability_into_sqlite], multiprocess = 20, verbose = 1)
+pipeline_run([insert_image_downloaded_availability_into_sqlite], multiprocess = 8, verbose = 1)
 
 
 
