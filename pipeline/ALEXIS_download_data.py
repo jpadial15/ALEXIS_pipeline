@@ -127,6 +127,7 @@ download_these = not_duplicated_urls.to_dict('records')
 
 print('done finding files')
 
+
 # #####
 def dl_params():
     for config in download_these:
