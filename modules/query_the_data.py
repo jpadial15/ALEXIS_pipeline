@@ -6,7 +6,7 @@ import pandas as pd
 import sqlalchemy as sa
 from datetime import datetime, timedelta
 import pickle
-import convert_datetime
+from modules import convert_datetime
 import dataconfig
 import json
 
@@ -220,7 +220,7 @@ def query_downloaded_image_availability(input_datetime):
 
         # query Xray DB
 
-        engine = sa.create_engine(f'sqlite:///{dataconfig.MAIN_DIR}/data_products/image_data_availability.db')
+        engine = sa.create_engine(f'sqlite:///{dataconfig.DATA_DIR_PRODUCTS}/image_data_availability.db')
 
         metadata = sa.MetaData()
 
