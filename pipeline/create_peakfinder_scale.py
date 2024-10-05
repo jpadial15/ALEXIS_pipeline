@@ -92,6 +92,14 @@ from modules import convex_fits_and_filtering_module
 from modules import convert_datetime
 from modules import associate_candidates_to_flare_meta_module
 from modules import LASSO_metrics_module
+from modules import ALEXIS_03_create_hek_report_module
+from modules import ALEXIS_02_define_ALEXIS_flares_module
+from modules import ALEXIS_02_associate_flare_to_harp_module
+from modules import ALEXIS_02_define_goes_class_module
+from modules import coordinate_conversion_module
+
+
+
 
 
 
@@ -105,15 +113,10 @@ from modules import LASSO_metrics_module
 
 
 
-import ALEXIS_03_create_hek_report_module
 
-import ALEXIS_02_define_ALEXIS_flares_module
 
-import ALEXIS_02_associate_flare_to_harp_module
 
-import ALEXIS_02_define_goes_class_module
 
-import coordinate_conversion_module
 
 
 
