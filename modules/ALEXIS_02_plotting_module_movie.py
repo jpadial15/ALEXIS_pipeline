@@ -1,4 +1,5 @@
 import os 
+import sys
 sys.path.insert(1, '..')
 sys.path.insert(2, '../modules/')
 
@@ -16,7 +17,6 @@ import sqlalchemy as sql
 import re
 import warnings
 
-from create_aia_12s_availability import DATA_PRODUCT_DIR
 warnings.filterwarnings("ignore")
 from astropy.io import fits
 from skimage.feature import peak_local_max
@@ -45,7 +45,6 @@ from scipy.stats import mstats
 from sklearn.metrics import mean_squared_error
 import query_the_data
 
-import aia_module
 
 import dataconfig
 import convert_datetime

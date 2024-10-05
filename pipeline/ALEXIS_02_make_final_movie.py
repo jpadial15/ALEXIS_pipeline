@@ -1,4 +1,5 @@
 import os 
+import sys
 sys.path.insert(1, '..')
 sys.path.insert(2, '../modules/')
 
@@ -13,25 +14,23 @@ import sys
 
 from ruffus import *
 
-
-
-import ALEXIS_02_define_goes_class_module
-
-import ALEXIS_02_plotting_module_movie
-
 import dataconfig
 
-import clean_img_data_02
 
-import helio_reg_exp_module
+from modules import ALEXIS_02_define_goes_class_module
+from modules import ALEXIS_02_plotting_module_movie
+from modules import clean_img_data_02
+from modules import helio_reg_exp_module
 
 
 
-start_flare_list = glob(f'{dataconfig.DATA_DIR_FLARE_CANDIDATES}/*/ALEXIS_flares_w_harp_goes_class_and_known_flare_meta.pickle')
+# start_flare_list = glob(f'{dataconfig.DATA_DIR_FLARE_CANDIDATES}/*/ALEXIS_flares_w_harp_goes_class_and_known_flare_meta.pickle')
+
+start_flare_list = glob(f'{dataconfig.DATA_DIR_FLARE_CANDIDATES}/*/defined_flares_w_harp_meta_and_goes_flare_class.pickle')
 
 # start_flare_list = [f'{dataconfig.DATA_DIR_FLARE_CANDIDATES}/flarecandidate_C1.1_at_2011-11-29T01_16_00_16.working/ALEXIS_flares_w_harp_goes_class_and_known_flare_meta.pickle']
 
-
+print(start_flare_list)
 
 
 @subdivide(start_flare_list, formatter(),
@@ -105,7 +104,7 @@ def make_movie_plots(infile, outfile):
 
 # pipeline_run([make_movie_plots], multiprocess= 15)
 
-@collate(make_movie_plots, formatter(r'flarecandidate_[A-Z]\d{1,}.\d{1,}_at_\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}_\d{2}.working\/ALEXIS_flares_w_harp_goes_class_and_known_flare_meta.movie_making_\d{1,3}.img_for_movie_made.pickle'), output = '{subpath[0][0]}/collate_jpeg_df.pickle')
+@collate(make_movie_plots, formatter(r'flarecandidate_[A-Z]\d{1,}.\d{1,}_at_\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}_\d{2}.working\/defined_flares_w_harp_meta_and_goes_flare_class.movie_making_\d{1,3}.img_for_movie_made.pickle'), output = '{subpath[0][0]}/collate_jpeg_df.pickle')
 def join_movie_files(infiles, outfile):
 
     output_df = pd.concat([pickle.load(open(infile, 'rb')) for infile in infiles])
@@ -133,5 +132,5 @@ def ffmpeg_movie_maker(infile, outfile):
 
     pickle.dump(input_df, open(outfile, 'wb'))
 
-pipeline_run([ffmpeg_movie_maker], multiprocess= 15)
+pipeline_run([ffmpeg_movie_maker], multiprocess= 8)
 
