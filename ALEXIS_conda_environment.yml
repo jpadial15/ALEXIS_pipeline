@@ -23,12 +23,7 @@ dependencies:
   - tk=8.6.10=hed695b0_0
   - wheel=0.35.1=pyh9f0ad1d_0
   - xz=5.2.5=h516909a_1
-  - zlib=1.2.11=h516909a_1009
-  - ffmpeg=4.2.7
-  - libavcodec
-  - libavformat
-  - libavutil
-  - libswscale
+  - zlib=1.2.11=h516909a_1009 
   - pip:
     - aiapy==0.4.0
     - aioftp==0.18.0
