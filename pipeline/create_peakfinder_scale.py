@@ -1541,7 +1541,7 @@ def create_first_hek_report(infile, outfile):
 
     pickle.dump(hek_report, open(outfile,'wb'))
 
-pipeline_run([create_first_hek_report], multiprocess = 35, verbose = 4)
+pipeline_run([create_first_hek_report], multiprocess = 8, verbose = 3)
 
 ############ CONTINUATION OF PIPELINE PRIOR TO APRIL 11 2024 #####################
 
