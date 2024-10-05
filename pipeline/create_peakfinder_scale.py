@@ -84,6 +84,7 @@ import itertools
 import scipy.stats
 from scipy.stats import mstats
 from sklearn.metrics import mean_squared_error
+from modules import sxi_module
 
 
 # import associate_HARP_to_flare_region_module
@@ -110,7 +111,6 @@ import ALEXIS_02_define_goes_class_module
 
 import coordinate_conversion_module
 
-import sxi_module
 
 
 # import ALEXIS_02_plotting_module_movie
