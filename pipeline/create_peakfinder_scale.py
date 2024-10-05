@@ -50,7 +50,7 @@ from modules import query_the_data
 # import aia_module
 
 import dataconfig
-from modules import convert_datetime
+
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 
@@ -84,7 +84,15 @@ import itertools
 import scipy.stats
 from scipy.stats import mstats
 from sklearn.metrics import mean_squared_error
+
+
 from modules import sxi_module
+from modules import clean_img_data_02
+from modules import convex_fits_and_filtering_module
+from modules import convert_datetime
+from modules import associate_candidates_to_flare_meta_module
+from modules import LASSO_metrics_module
+
 
 
 # import associate_HARP_to_flare_region_module
@@ -93,13 +101,9 @@ from modules import sxi_module
 # import check_data_qual_module_02
 # need to bring to github
 
-import clean_img_data_02
 
-import convex_fits_and_filtering_module
 
-import associate_candidates_to_flare_meta_module
 
-import LASSO_metrics_module
 
 import ALEXIS_03_create_hek_report_module
 
