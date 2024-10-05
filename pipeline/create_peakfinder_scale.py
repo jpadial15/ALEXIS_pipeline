@@ -1543,6 +1543,11 @@ def create_first_hek_report(infile, outfile):
 
 pipeline_run([create_first_hek_report], multiprocess = 8, verbose = 3)
 
+# # need to add: apt install graphviz to run pipeline_printout
+
+# pipeline_printout_graph (f'{dataconfig.DATA_DIR_PRODUCTS}/ALEXIS_flowchart.png', "png", [create_first_hek_report])
+
+
 ############ CONTINUATION OF PIPELINE PRIOR TO APRIL 11 2024 #####################
 
 # @transform(assign_xray_class_to_alexis_peak, suffix('defined_flares_w_harp_meta_and_goes_flare_class.pickle'), 'ALEXIS_flares_w_harp_goes_class_and_known_flare_meta.pickle')
