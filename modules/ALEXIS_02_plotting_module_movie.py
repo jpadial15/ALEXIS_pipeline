@@ -175,7 +175,7 @@ def plot_img_zoom_ins_for_movie(axis, this_img_df, catalog_df, tracking_number, 
 
     flare_meta_df = pickle.load(open(flare_meta_file, 'rb'))
 
-    id_team_dict = {'SolarSoft': 'magenta', 'SWPC': 'cyan'}
+    id_team_dict = {'SolarSoft': 'yellow', 'SWPC': 'red'}
 
     for id_team, id_group in flare_meta_df.groupby('id_team'):
     
@@ -357,7 +357,7 @@ def plot_best_fit_image_movie(axis, this_img_df, catalog_df, data, header):
 
     flare_meta_df = pickle.load(open(flare_meta_file, 'rb'))
 
-    id_team_dict = {'SolarSoft': 'magenta', 'SWPC': 'cyan'}
+    id_team_dict = {'SolarSoft': 'yellow', 'SWPC': 'red'}
 
     for id_team, id_group in flare_meta_df.groupby('id_team'):
     
@@ -505,7 +505,7 @@ def peaktime_plot_known_flare_meta_solarsoft(axis, df):
     
     flare_meta = flare_meta_df[flare_meta_df.id_team == 'SolarSoft']
     
-    color_dict = {'SolarSoft': 'magenta', 'SWPC': 'cyan'}
+    color_dict = {'SolarSoft': 'yellow', 'SWPC': 'red'}
     
     y_lim_dict = {'SolarSoft': [.5,1], 'SWPC': [0,0.5]}
     
@@ -558,7 +558,7 @@ def peaktime_plot_known_flare_meta_swpc(axis, df):
     
     if len(flare_meta) > 0:
     
-        color_dict = {'SolarSoft': 'magenta', 'SWPC': 'cyan'}
+        color_dict = {'SolarSoft': 'yellow', 'SWPC': 'red'}
 
         y_lim_dict = {'SolarSoft': [0.5,1], 'SWPC': [0,.5]}
 
