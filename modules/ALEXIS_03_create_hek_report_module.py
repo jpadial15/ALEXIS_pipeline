@@ -6,7 +6,7 @@ import numpy as np
 from glob import glob
 import pickle
 
-from modules import dataconfig
+import dataconfig
 from modules import convert_datetime
 from modules import helio_reg_exp_module
 
