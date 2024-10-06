@@ -376,7 +376,7 @@ def insert_image_downloaded_availability_into_sqlite(infile, outfile):
 
 pipeline_run([insert_image_downloaded_availability_into_sqlite], multiprocess = 8, verbose = 1)
 
-
+pipeline_printout_graph (f'{dataconfig.DATA_DIR_PRODUCTS}/create_initialize_files_flowchart.png', "png", [insert_image_downloaded_availability_into_sqlite])
 
 # ### check good data quality for elements that we initialized to download data
 
