@@ -321,6 +321,8 @@ def download_data(infile, outfile, config): #function 1
 
 pipeline_run([download_data], multiprocess = 10, verbose = 1)
 
+pipeline_printout_graph (f'{dataconfig.DATA_DIR_PRODUCTS}/download_data_flowchart.png', "png", [download_data])
+
 
 
 # flares_111 = flare_list[flare_list.id_tuple == (1,1,1)].reset_index(drop = True).sort_values(by = 'merged_datetime')
