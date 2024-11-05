@@ -140,3 +140,36 @@ def find_xrs_data(work_group):
     xrs_b = masked_xrs[masked_xrs.wavelength == 'B'].sort_values(by = 'date_time')
     
     return(xrs_b)
+
+
+IN_HOUSE_GOES_CONVERSION_DICT = {
+     -4:"X",
+     -5:"M",
+     -6:"C",
+     -7:"B",
+     -8:"A",
+}
+
+def in_house_mag_to_class(this_mag):
+
+    formatted_result = f"{this_mag:.3e}"
+
+    flare_number = re.findall(r'\d{1}.\d{2}', formatted_result)[0]
+
+    flare_exponent = np.float(re.findall(r'-\d{2}', formatted_result)[0])
+
+    if flare_exponent < -8.0:
+        flare_str = 'A'
+    elif flare_exponent > -4.0:
+        flare_str = 'X'
+    else:
+        flare_str = IN_HOUSE_GOES_CONVERSION_DICT[flare_exponent]
+
+    # make output flare class
+
+    output_flare_class = f'{flare_str}{flare_number}'
+
+    # print('done', output_flare_class, formatted_result,flare_exponent)
+
+    return(output_flare_class)
+
