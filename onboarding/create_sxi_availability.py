@@ -16,6 +16,7 @@ import dataconfig
 from modules import convert_datetime
 from time import time, sleep
 from random import randint
+import random
 
 import warnings as warn
 
@@ -96,13 +97,9 @@ for full_instrument_name in instruments:
         ftp_name_dict.append({ 'availability_file': http_name , 'out_name': outfile_str })
 
 
-# import pickle
-# from ruffus import *
-# import os
+# shuffle ftp_name_dict 
 
-
-# WORKING_DIR = '/data/padialjr/jorge-helio/goes_sxi/'
-# tw = lambda x: os.path.join(WORKING_DIR, x)
+random.shuffle(ftp_name_dict)
 
 def dl_params():
     for dictionary_element in ftp_name_dict:
