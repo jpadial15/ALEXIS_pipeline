@@ -71,11 +71,11 @@ for dt in daterange(START_DATE_TIME, END_DATE_TIME):
 
 # Where from noaa FTP portal are you downloading from?
 
-ftp_prename = 'ftp://satdat.ngdc.noaa.gov/sxi/archive/fits'
-http_prename = 'https://satdat.ngdc.noaa.gov/sxi/archive/fits'
+# ftp_prename = 'ftp://satdat.ngdc.noaa.gov/sxi/archive/fits'
+http_prename = 'https://www.ncei.noaa.gov/data/goes-solar-xray-imager/access/fits'
 
 # NOTE: we are interested in the ftp file that resembles:
-#  ftp://satdat.ngdc.noaa.gov/sxi/archive/fits/goesXX/YYYY/MM/DD/*BA*.FTS
+#  https://www.ncei.noaa.gov/data/goes-solar-xray-imager/access/fits/goesXX/YYYY/MM/DD/*BA*.FTS
 
 ftp_name_dict = []
 
@@ -85,15 +85,12 @@ for full_instrument_name in instruments:
 
         year, month, day = this_date.strftime('%Y'), this_date.strftime('%m'), this_date.strftime('%d')
 
-        # specific_file_name = 'sci_gxrs-l2-irrad_{}_d{}_v0-0-0.nc'.format(inst_dict[full_instrument_name], specific_date_str)
-
-        ftp_name = f'{ftp_prename}/{full_instrument_name}/{year}/{month}/{day}'
-
         http_name = f'{http_prename}/{full_instrument_name}/{year}/{month}/{day}'
 
         outfile_str = tw(f'{year}-{month}-{day}_{full_instrument_name}')
 
-        ftp_name_dict.append({'download_file': ftp_name, 'availability_file': http_name , 'out_name': outfile_str })
+        # ftp_name_dict.append({'download_file': ftp_name, 'availability_file': http_name , 'out_name': outfile_str })
+        ftp_name_dict.append({ 'availability_file': http_name , 'out_name': outfile_str })
 
 
 # import pickle
@@ -142,14 +139,6 @@ def check_data_availability(infile, outfile):
 
     http_query_name = queries['availability_file']
 
-    # outfile_name = queries['outname']
-
-    # print(outfile)
-
-    # download_str = f'wget -e robots=off --recursive --no-parent globs = True --directory-prefix {WORKING_DIR} --no-directories --verbose False {ftp_query_name}'
-
-    # os.system(download_str)
-
     response = get(http_query_name, headers = headers)
     # print(f'{response.status_code} for {http_query_name}')
 
@@ -191,13 +180,13 @@ def check_data_availability(infile, outfile):
 
                 full_instrument_name = f'goes{inst}'
 
-                ftp_prename = 'ftp://satdat.ngdc.noaa.gov/sxi/archive/fits'
+                # ftp_prename = 'ftp://satdat.ngdc.noaa.gov/sxi/archive/fits'
 
-                ftp_query_name = f'{ftp_prename}/{full_instrument_name}/{year}/{month}/{day}/{file_name}'
+                http_query_name = f'{http_prename}/{full_instrument_name}/{year}/{month}/{day}/{file_name}'
 
-                download_str = f'wget -e robots=off --recursive --no-parent globs = True --directory-prefix {WORKING_DIR} --no-directories --verbose False {ftp_query_name}'
+                download_str = f'wget -e robots=off --recursive --no-parent globs = True --directory-prefix {WORKING_DIR} --no-directories --verbose False {http_query_name}'
 
-                sxi_links.append({'download_string': download_str, 'time_stamp': time_stamp, 'data_level': level, 'file_name': file_name, 'instrument': full_instrument_name})
+                sxi_links.append({'url': http_query_name, 'download_string': download_str, 'time_stamp': time_stamp, 'data_level': level, 'file_name': file_name, 'instrument': full_instrument_name})
 
         available_data_df = pd.DataFrame(sxi_links)
 
@@ -222,11 +211,12 @@ engine = sa.create_engine(f'sqlite:////{DATA_PRODUCT_DIR}/sxi_availability.db', 
 metadata = sa.MetaData()
 
 sxi_availability = sa.Table('sxi_availability', metadata,
-        sa.Column('download_string', sa.types.String(), index = True),
+        sa.Column('download_string', sa.types.String()),
         sa.Column('time_stamp', sa.types.Float(), index = True), 
-        sa.Column('data_level', sa.types.String(), index = True),  
-        sa.Column('file_name', sa.types.String(), index = True),
-        sa.Column('instrument', sa.types.String(), index = True)
+        sa.Column('url', sa.types.String()),
+        sa.Column('data_level', sa.types.String()),  
+        sa.Column('file_name', sa.types.String()),
+        sa.Column('instrument', sa.types.String())
                         )
 
 # metadata.create_all(engine)
