@@ -38,6 +38,9 @@ inst_dict = {'goes13': 'g13', 'goes14': 'g14', 'goes15': 'g15'}
 start_download_from = '2010-05-01T00:00:00'
 end_download_at = '2020-03-06T00:00:00'
 
+# start_download_from = '2010-05-01T00:00:00'
+# end_download_at = '2010-05-02T00:00:00'
+
 
 # start_download_from = '2014-12-01T00:00:00'
 # end_download_at = '2015-01-01T23:59:59'
