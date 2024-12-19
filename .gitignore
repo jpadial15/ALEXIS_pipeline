@@ -2,6 +2,16 @@ __pycache__
 
 .ruffus_history.sqlite
 
-data_products
+data_products/*.db
+
+data_products/*.xz
+
+data_products/*.png
+
+data_products/*.jpg
+
+data_products/*.pickle
+
+data_products/hmi_db_keywords.md
 
 assets
