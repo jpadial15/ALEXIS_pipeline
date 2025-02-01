@@ -1188,18 +1188,75 @@ def fit_all_zoom_LASSO(infile, outfile):
 
 
 
-@collate(fit_all_zoom_LASSO, formatter(r'flarecandidate_[A-Z]\d{1,}.\d{1,}_at_\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}_\d{2}.working\/resampled_img_df_v3.gridsearch_\d{1,3}.zoom_in_lasso_results_v3.pickle'), output = '{subpath[0][0]}/v3_LASSO_df.pickle')
+@collate(fit_all_zoom_LASSO, formatter(r'flarecandidate_[A-Z]\d{1,}.\d{1,}_at_\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}_\d{2}.working\/resampled_img_df_v3.gridsearch_\d{1,3}.zoom_in_lasso_results_v3.pickle'), output = '{subpath[0][0]}/v4_LASSO_df.pickle')
+# @collate(fit_all_zoom_LASSO, formatter(r'flarecandidate_[A-Z]\d{1,}.\d{1,}_at_\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}_\d{2}.working\/resampled_img_df_v3.gridsearch_\d{1,3}.zoom_in_lasso_results_v3.pickle'), output = '{subpath[0][0]}/v5_LASSO_df.pickle')
 def collate_gridsearched_LASSO_fits_and_metrics(infiles, outfile):
 
-    all_lasso_fits = pd.concat([pickle.load(open(this_file, 'rb')) for this_file in infiles]).sort_values(by = 'best_fit')
+    infile = pd.concat([pickle.load(open(this_file, 'rb')) for this_file in infiles])
+    
 
 
-    pickle.dump(all_lasso_fits, open(outfile, 'wb'))
+    pickle.dump(infile, open(outfile, 'wb'))
+    
+
+    
+# pipeline_run([collate_gridsearched_LASSO_fits_and_metrics], multiprocess = 20, verbose = 4)
 
 
-# pipeline_run([collate_gridsearched_LASSO_fits_and_metrics], multithread = 15, verbose = 1)
+@transform(collate_gridsearched_LASSO_fits_and_metrics, suffix('v3_LASSO_df.pickle'), 'all_fits_distance_calculated_v3.pickle')
+def calculate_fits_metric_distance(infile, outfile):
+    
+    infile = pickle.load(open(infile, 'rb'))
+    
+    #### under is way to do by equally weighted euclidean distance
+    
+    mask = infile[['RMSE', 'MSE', 'vector_fit', 'E_tot', 'pears_corr']]
+    
+    new_array = pd.DataFrame({
+        'RMSE': 0,
+        'MSE': 0,
+        'vector_fit': 1,
+        'E_tot': 1,
+        'pears_corr': 1
+    }, index=mask.index)
+    
+    distance_df = (new_array - mask)**2
+    
+    distance_df['pears_corr'] = [ (this_pears)/4 for this_pears in distance_df['pears_corr']]
+    
+    distance_df['sum'] = distance_df.sum(axis = 1)
+    
+    distance_df['distance'] = np.sqrt(distance_df['sum'])
+    
+    infile['distance'] = distance_df['distance']
+    
+    
+    
+    #### under is way to do by parametrizing result between [-1,1]
+    
+#     mask = infile[['RMSE', 'vector_fit', 'E_tot', 'pears_corr']]
+
+#     copy_mask = pd.DataFrame()
+
+#     copy_mask['regu_RMSE'] = LASSO_metrics_module.norm_RMSE(mask['RMSE'])
+
+#     # copy_mask['vector'] = lasso_metrics_module.norm_etot(mask['vector_fit'])
+
+#     copy_mask['e_tot'] = LASSO_metrics_module.norm_etot(mask['E_tot'])
+
+#     copy_mask['pears'] = LASSO_metrics_module.norm_pears(mask['pears_corr'])
+
+
+#     infile['distance'] = copy_mask.sum(axis=1) / 3
+    
+#     output_file = infile.sort_values(by = 'distance')
+
+    pickle.dump(infile, open(outfile, 'wb'))
+
+# pipeline_run([calculate_fits_metric_distance], multithread = 15, verbose = 4)
    
-@transform(collate_gridsearched_LASSO_fits_and_metrics, suffix('v3_LASSO_df.pickle'), 'all_best_fits_w_lowpass_filter_v3.pickle')
+
+@transform(calculate_fits_metric_distance, suffix('all_fits_distance_calculated_v3.pickle'), 'all_best_fits_w_lowpass_filter_v3.pickle')
 def candidates_w_coeff_greater_than_10_percent_for_each_xrs_img_combo_filter(infile, outfile):
 
     ######## analysis function #############
