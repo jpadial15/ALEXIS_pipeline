@@ -1188,7 +1188,7 @@ def fit_all_zoom_LASSO(infile, outfile):
 
 
 
-@collate(fit_all_zoom_LASSO, formatter(r'flarecandidate_[A-Z]\d{1,}.\d{1,}_at_\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}_\d{2}.working\/resampled_img_df_v3.gridsearch_\d{1,3}.zoom_in_lasso_results_v3.pickle'), output = '{subpath[0][0]}/v4_LASSO_df.pickle')
+@collate(fit_all_zoom_LASSO, formatter(r'flarecandidate_[A-Z]\d{1,}.\d{1,}_at_\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}_\d{2}.working\/resampled_img_df_v3.gridsearch_\d{1,3}.zoom_in_lasso_results_v3.pickle'), output = '{subpath[0][0]}/v3_LASSO_df.pickle')
 # @collate(fit_all_zoom_LASSO, formatter(r'flarecandidate_[A-Z]\d{1,}.\d{1,}_at_\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}_\d{2}.working\/resampled_img_df_v3.gridsearch_\d{1,3}.zoom_in_lasso_results_v3.pickle'), output = '{subpath[0][0]}/v5_LASSO_df.pickle')
 def collate_gridsearched_LASSO_fits_and_metrics(infiles, outfile):
 
