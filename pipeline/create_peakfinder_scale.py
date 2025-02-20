@@ -1203,7 +1203,7 @@ def collate_gridsearched_LASSO_fits_and_metrics(infiles, outfile):
 # pipeline_run([collate_gridsearched_LASSO_fits_and_metrics], multiprocess = 20, verbose = 4)
 
 
-@transform(collate_gridsearched_LASSO_fits_and_metrics, suffix('v3_LASSO_df.pickle'), 'all_fits_distance_calculated_v3.pickle')
+@transform(collate_gridsearched_LASSO_fits_and_metrics, suffix('v3_LASSO_df.pickle'), 'all_fits_distance_calculated_v4.pickle')
 def calculate_fits_metric_distance(infile, outfile):
     
     infile = pickle.load(open(infile, 'rb'))
@@ -1256,7 +1256,8 @@ def calculate_fits_metric_distance(infile, outfile):
 # pipeline_run([calculate_fits_metric_distance], multithread = 15, verbose = 4)
    
 
-@transform(calculate_fits_metric_distance, suffix('all_fits_distance_calculated_v3.pickle'), 'all_best_fits_w_lowpass_filter_v3.pickle')
+@transform(calculate_fits_metric_distance, suffix('all_fits_distance_calculated_v4.pickle'), 'all_best_fits_w_lowpass_filter_v4.pickle')
+# @transform(collate_gridsearched_LASSO_fits_and_metrics, suffix('all_fits_distance_calculated.pickle'), 'all_best_fits_w_lowpass_filter_v5.pickle')
 def candidates_w_coeff_greater_than_10_percent_for_each_xrs_img_combo_filter(infile, outfile):
 
     ######## analysis function #############
@@ -1265,7 +1266,8 @@ def candidates_w_coeff_greater_than_10_percent_for_each_xrs_img_combo_filter(inf
 
     def filter_for_coeff_greater_than_10_percent(all_lasso_data_df):
 
-        best_df = all_lasso_data_df.sort_values('best_fit').iloc[0]
+#         best_df = all_lasso_data_df.sort_values('best_fit').iloc[0]
+        best_df = all_lasso_data_df.sort_values('distance').iloc[0]
 
         coef_array = best_df.coeff
 
@@ -1273,7 +1275,7 @@ def candidates_w_coeff_greater_than_10_percent_for_each_xrs_img_combo_filter(inf
 
         surviving_clusters_tuple = tuple(gridsearch_cluster_array[np.where(coef_array > .1)])
 
-        filtered_for_good_clusters = all_lasso_data_df[all_lasso_data_df.gridsearch_clusters == surviving_clusters_tuple].sort_values('best_fit')
+        filtered_for_good_clusters = all_lasso_data_df[all_lasso_data_df.gridsearch_clusters == surviving_clusters_tuple].sort_values('distance')
 
         return(filtered_for_good_clusters.iloc[0])
 
@@ -1296,7 +1298,7 @@ def candidates_w_coeff_greater_than_10_percent_for_each_xrs_img_combo_filter(inf
 
         # find how many xrs/img combos agree to a particular gridsearch_cluster tuple
 
-            no_conf_df = pd.DataFrame(filtered_clusters_coeff_by_10_percent_df_list).sort_values(['best_fit']) # ouput_df without gridsearch confidence calculation
+            no_conf_df = pd.DataFrame(filtered_clusters_coeff_by_10_percent_df_list).sort_values(['distance']) # ouput_df without gridsearch confidence calculation
 
             conf_df = pd.DataFrame(no_conf_df.gridsearch_clusters.value_counts()).reset_index()
 
@@ -1328,16 +1330,16 @@ def candidates_w_coeff_greater_than_10_percent_for_each_xrs_img_combo_filter(inf
 
 # pipeline_run([candidates_w_coeff_greater_than_10_percent_for_each_xrs_img_combo_filter], multithread = 15, verbose = 1)
 
-@transform(candidates_w_coeff_greater_than_10_percent_for_each_xrs_img_combo_filter, suffix('all_best_fits_w_lowpass_filter_v3.pickle'), 'best_of_the_rest_fit_vote_w_lowpass_filter_v3.pickle')
+@transform(candidates_w_coeff_greater_than_10_percent_for_each_xrs_img_combo_filter, suffix('all_best_fits_w_lowpass_filter_v4.pickle'), 'best_of_the_rest_fit_vote_w_lowpass_filter_v4.pickle')
 def choose_best_of_the_rest_fit(infile, outfile):
 
-    voting_df = pickle.load(open(infile, 'rb')).sort_values(['best_fit']).iloc[0]
+    voting_df = pickle.load(open(infile, 'rb')).sort_values(['distance']).iloc[0]
 
     pickle.dump(voting_df, open(outfile, 'wb'))
 
 # pipeline_run([choose_best_of_the_rest_fit], multithread = 35, verbose = 1)
 
-@transform(choose_best_of_the_rest_fit, suffix('best_of_the_rest_fit_vote_w_lowpass_filter_v3.pickle'), 'best_fit_lowpass_w_known_flare_meta_path.pickle')
+@transform(choose_best_of_the_rest_fit, suffix('best_of_the_rest_fit_vote_w_lowpass_filter_v4.pickle'), 'best_fit_lowpass_w_known_flare_meta_path.pickle')
 def find_known_flares_metadata(infile, outfile):
 
     best_fit_file = pickle.load(open(infile,'rb'))
@@ -1373,7 +1375,7 @@ def find_known_flares_metadata(infile, outfile):
 # pipeline_run([find_known_flares_metadata], multithread = 15, verbose = 1)
 
 @jobs_limit(1)
-@transform(find_known_flares_metadata, suffix('best_fit_lowpass_w_known_flare_meta_path.pickle'),'best_fit_lowpass_w_harp_and_flare_meta_paths.pickle')
+@transform(find_known_flares_metadata, suffix('best_fit_lowpass_w_known_flare_meta_path_v4.pickle'),'best_fit_lowpass_w_harp_and_flare_meta_paths_v4.pickle')
 def query_HARP_drms_database_and_pass_AR_available(infile, outfile):
 
 # save the drms harp pickle file path within the define flare data frame
@@ -1408,7 +1410,7 @@ def query_HARP_drms_database_and_pass_AR_available(infile, outfile):
 # pipeline_run([query_HARP_drms_database_and_pass_AR_available], multithread = 30, verbose = 3)
 
 
-@transform(query_HARP_drms_database_and_pass_AR_available, suffix('best_fit_lowpass_w_harp_and_flare_meta_paths.pickle'), 'defined_flare_peaks_w_best_fit_180s_window.pickle')
+@transform(query_HARP_drms_database_and_pass_AR_available, suffix('best_fit_lowpass_w_harp_and_flare_meta_paths_v4.pickle'), 'defined_flare_peaks_w_best_fit_180s_window_v4.pickle')
 def define_ALEXIS_flare_peaktime(infile, outfile):
 
     input_df = pickle.load(open(infile, 'rb'))
@@ -1420,7 +1422,7 @@ def define_ALEXIS_flare_peaktime(infile, outfile):
 # pipeline_run([define_ALEXIS_flare_peaktime], multithread = 35, verbose = 1)
 
 
-@transform(define_ALEXIS_flare_peaktime, suffix('defined_flare_peaks_w_best_fit_180s_window.pickle'), 'defined_flares_w_harp.pickle')
+@transform(define_ALEXIS_flare_peaktime, suffix('defined_flare_peaks_w_best_fit_180s_window_v4.pickle'), 'defined_flares_w_harp_v4.pickle')
 def associate_candidates_to_HARP(infile, outfile):
 
 
@@ -1477,7 +1479,7 @@ def associate_candidates_to_HARP(infile, outfile):
 
 
 @jobs_limit(1)
-@transform(associate_candidates_to_HARP, suffix('defined_flares_w_harp.pickle'), 'defined_flares_w_harp_meta_and_goes_flare_class.pickle')
+@transform(associate_candidates_to_HARP, suffix('defined_flares_w_harp_v4.pickle'), 'defined_flares_w_harp_meta_and_goes_flare_class_v4.pickle')
 def assign_xray_class_to_alexis_peak(infile, outfile):
 
     test_infile = pickle.load(open(infile, 'rb'))
@@ -1570,7 +1572,7 @@ def assign_xray_class_to_alexis_peak(infile, outfile):
 
 # pipeline_run([assign_xray_class_to_alexis_peak], multithread = 35, verbose = 1)
 
-@transform(assign_xray_class_to_alexis_peak, suffix('defined_flares_w_harp_meta_and_goes_flare_class.pickle'), 'first_hek_report.pickle')
+@transform(assign_xray_class_to_alexis_peak, suffix('defined_flares_w_harp_meta_and_goes_flare_class_v4.pickle'), 'first_hek_report_v4.pickle')
 def create_first_hek_report(infile, outfile):
     
     defined_flares = pickle.load(open(infile,'rb'))
