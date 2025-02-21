@@ -1222,11 +1222,13 @@ def calculate_fits_metric_distance(infile, outfile):
     
     distance_df = (new_array - mask)**2
     
-    distance_df['pears_corr'] = [ (this_pears)/4 for this_pears in distance_df['pears_corr']]
+    distance_df['pears_corr'] /=  4 #[ (this_pears)/4 for this_pears in distance_df['pears_corr']]
     
-    distance_df['sum'] = distance_df.sum(axis = 1)
+    # distance_df['sum'] = distance_df.sum(axis = 1)
     
-    distance_df['distance'] = np.sqrt(distance_df['sum'])
+    # distance_df['distance'] = np.sqrt(distance_df['sum'])
+
+    distance_df['distance'] = np.sqrt(distance_df.sum(axis=1))
     
     infile['distance'] = distance_df['distance']
     
