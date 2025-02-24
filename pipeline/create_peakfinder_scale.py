@@ -1341,7 +1341,7 @@ def choose_best_of_the_rest_fit(infile, outfile):
 
 # pipeline_run([choose_best_of_the_rest_fit], multithread = 35, verbose = 1)
 
-@transform(choose_best_of_the_rest_fit, suffix('best_of_the_rest_fit_vote_w_lowpass_filter_v4.pickle'), 'best_fit_lowpass_w_known_flare_meta_path.pickle')
+@transform(choose_best_of_the_rest_fit, suffix('best_of_the_rest_fit_vote_w_lowpass_filter_v4.pickle'), 'best_fit_lowpass_w_known_flare_meta_path_v4.pickle')
 def find_known_flares_metadata(infile, outfile):
 
     best_fit_file = pickle.load(open(infile,'rb'))
