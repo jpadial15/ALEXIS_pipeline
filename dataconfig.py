@@ -10,7 +10,7 @@ MAIN_DATA_DIR = '/mnt/e/ALEXIS_data'
 #############################################
 JSOC_DL_DIR = "jsoc.download"
 
-NOTIFY_EMAIL_ADDR = 'jorge.r.padial.doble@vanderbilt.edu'
+NOTIFY_EMAIL_ADDR = '<insert_JSOC_registerd_email_here>'
 
 ############################################
 
