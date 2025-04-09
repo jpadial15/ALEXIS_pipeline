@@ -7,7 +7,7 @@ The main goal of the ALEXIS pipeline is to be able to create an independent data
 A flare list containing the event date, peak-time, Helioprojective Cartesian coordinates, NOAA AR number and HARP identifier is returned.
 An example of the event list can be seen below:
 
-![alt text](/github_imgs/example_event_list.png)
+![alt text](./github_imgs/example_event_list.png)
 
 One can either:
 
