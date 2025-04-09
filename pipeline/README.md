@@ -36,7 +36,7 @@ For example, if you are interested in the C4.0 class flare that occured on 2011-
 On line 84 and 85 of the ALEXIS_download_data.py script you will see the following:
 
 ``` 
-Set input_time_list = ['2011-02-08 21:11:00.08'].
+Set input_time_list = ['2011-02-08 21:11:00.08']
 Set input_class_list = ['C4.0']
 
 ```
@@ -45,11 +45,15 @@ Currently, the pipeline will run data for that combination of input_class and in
 
 If you want to do multiple events, change those lines to reflect the working_directories you want to create. 
 
+
+
 The following code will create two working_directories, 
 
 ```
-
+# flare class list in the format of : '<letter><number>.<number>'
 input_class_list = ['C4.0', 'C1.8']
+
+# flare date-time list in UTC with format: 'YYYY-MM-DD HH:MM:SS.ss'
 input_time_list = ['2011-02-08 21:11:00.08', '2011-11-14 20:12:30.25']
 
 ```
