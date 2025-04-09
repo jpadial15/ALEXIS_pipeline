@@ -11,7 +11,7 @@ An example of the event list can be seen below:
   <img src="./github_images/example_event_list.png" alt="alt text" width="800">
 </center>
 
-One can either:
+### One can either:
 
 1. Download the event list:
 
