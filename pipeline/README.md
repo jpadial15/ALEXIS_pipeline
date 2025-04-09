@@ -2,6 +2,9 @@
 The processing pipeline has been split up into different componenets that must be run in order. 
 This way, you can run the same pipeline in chuncks, making it easier to debug and to communicate with the team for trouble shooting. 
 ## Please feel free to submit an issue. 
+# Warning
+Ensure that the dataconfig.py file is correctly configured with paths to the data directories.
+Ensure that you have followed the instructions in the on-boarding process. 
 
 
 # ALEXIS by Parts:
@@ -13,31 +16,16 @@ There are 4 main scripts that make up the ALEXIS pipeline. The four scripts are:
 
 
 # 1. Download data:
+## Note:
+The script uses parallel processing (multiprocess=10) to speed up downloads. Adjust this value based on your system's capabilities. 
+The script includes mechanisms to handle download errors and retry failed downloads; if a file cannot be parsed or downloaded, it will log the issue and allow the pipeline to be restarted.
+
 ## Features
-- Downloads solar flare data based on user-specified flare classes and timestamps.
-- Queries data availability from AIA and SXI databases.
-- Organizes downloaded data into a structured directory format.
+- Downloads solar flare data based on user-specified flare classes and timestamps. 
+- Queries a list of all available data from the AIA and SXI databases created or downloaded in the "onboarding-process".
+- Organizes downloaded data into a structured directory format based on its flare class and timestamp.
 - Ensures data integrity using hashed URLs and caching mechanisms.
-- Supports parallel processing for faster downloads using the Ruffus pipeline.
-
-The script will:
-
-Create working directories for each flare in the DATA_DIR_FLARE_CANDIDATES directory (defined in dataconfig.py).
-Download and save data files in the DATA_DIR_IMG_RUFFUS_OUTPUT directory.
-Generate a flowchart of the pipeline in the data_products directory.
-Pipeline Steps
-Create Working Directories: Generates directories for each flare based on its class and timestamp.
-Query Data Availability: Checks the availability of AIA and SXI data for the specified flares.
-Download Data: Downloads the data files and saves them in a structured format.
-Save Metadata: Stores metadata about the downloaded files, including URLs, timestamps, and file paths.
-Error Handling
-The script includes mechanisms to handle download errors and retry failed downloads.
-If a file cannot be parsed or downloaded, it will log the issue and allow the pipeline to be restarted.
-Notes
-Ensure that the dataconfig.py file is correctly configured with paths to the data directories.
-The script uses parallel processing (multiprocess=10) to speed up downloads. Adjust this value based on your system's capabilities.
-Flowchart
-The script generates a flowchart of the pipeline in the data_products directory as download_data_flowchart.png.
+- Supports parallel processing for faster downloads.
 
 ## Usage
 To download data for a single flare:
