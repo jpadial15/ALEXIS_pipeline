@@ -1,27 +1,22 @@
-# Requirements:
-## 1. Anaconda installed on your system.
-   If you don't have Anaconda installed. Please verify (https://repo.anaconda.com/archive/) and change the wget link to your system. Follow on-screen instructions and install in the default path. 
-   ```
-   wget https://repo.anaconda.com/archive/Anaconda3-2024.06-1-Linux-x86_64.sh
 
-   bash Anaconda3-2024.06-1-Linux-x86_64.sh
-   ```
-## 2. Fork ALEXIS_pipeline repository to your own github account. 
-   Then,clone your copy of ALEXIS_pipeline to the machine you are working from. A walk through of a similar process can be found here: https://github.com/jpadial15/ai-science-training-series/blob/main/00_introToAlcf/03_githubHomework.md
+# If you only want the event list, please register and download the event list from the google drive link in ./data_products/
 
-## 3. Install conda environment
+#
+## Requirements:
+### 1. Install conda environment
    ```
    conda env create -f ALEXIS_conda_environment.yml
    
    ```
 
-## 4. Activate conda environment
+### 2. Activate conda environment
    ```
    conda activate aiadl_2
    ```
-## 5. Modify the data config file.
+### 3. Modify the data config file.
    In the home directory of the repository, change the values of home directory, jsoc email. 
-## 6. SQLite databases: 
+
+### 4. SQLite databases: 
    - Make or download the XRS availability database.
    - Remember to make the data_products directory and verify the permissions of all directories and data products. Permissions need to be changed for ruffus database. 
       ```
