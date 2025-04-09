@@ -1,10 +1,13 @@
 # Automatically Labelled EUV and XRay Incident Solarflare Catalog
-## ALEXIS is a pipeline that can re-create the integrated X-Ray flux of the full solar disk into the emission from discrete regions in the Extreme UV. 
+## ALEXIS is a pipeline that can re-create the integrated X-Ray flux of the full solar disk into the emission from discrete regions in the Extreme UV. This pipeline is intended to help in identifying and cataloging solar flares. 
 ### NOTE: Does not run on ARM chips (Linux/X86 only)
-This pipeline is intended to help in identifying and cataloging solar flares. 
+
 
 The main goal of the ALEXIS pipeline is to be able to create an independent data product to localize solar flares. 
-A flare list containing the event date, peak-time, Helioprojective Cartesian coordinates, NOAA AR number and HARP identifier is returned. 
+A flare list containing the event date, peak-time, Helioprojective Cartesian coordinates, NOAA AR number and HARP identifier is returned.
+An example of the event list can be seen below:
+
+![alt text](/github_imgs/example_event_list.png)
 
 One can either:
 
