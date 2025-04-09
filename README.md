@@ -1,5 +1,9 @@
 # Automatically Labelled EUV and XRay Incident Solarflare Catalog
+
+
 ## ALEXIS is a pipeline that can re-create the integrated X-Ray flux of the full solar disk into the emission from discrete regions in the Extreme UV. This pipeline is intended to help in identifying and cataloging solar flares. 
+
+
 ### NOTE: Does not run on ARM chips (Linux/X86 only)
 
 
