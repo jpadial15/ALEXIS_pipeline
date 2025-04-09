@@ -10,9 +10,14 @@ Ensure that you have followed the instructions in the on-boarding process.
 # ALEXIS by Parts:
 There are 4 main scripts that make up the ALEXIS pipeline. The four scripts are:
 ### 1. ALEXIS_download_data.py
+- quick run: change lines 84 and 85 to include a list of flare classes and flare datetimes you are interested in running. 
 ### 2. ALEXIS_02_create_initialize_files.py
+- quick run: once data for your flares is downloaded, ALEXIS_02_create_initialize_files.py can be run without further modification. 
 ### 3. ALEXIS_03_create_wd_w_init_files_before_hyperspectral.py
+- quick run: once initialization files have been created, ALEXIS_03_create_wd_w_init_files_before_hyperspectral.py can be run without further modification. 
 ### 4. create_peakfinder_scale_02.py
+- quick run: once hyperspectral candidates are created, create_peakfinder_scale_02.py can be run without further modification.
+
 
 
 # 1. Download data:
@@ -38,7 +43,6 @@ On line 84 and 85 of the ALEXIS_download_data.py script you will see the followi
 ``` 
 Set input_time_list = ['2011-02-08 21:11:00.08']
 Set input_class_list = ['C4.0']
-
 ```
 
 Currently, the pipeline will run data for that combination of input_class and input_time. The data will be downloaded and organized in the specified directories.
