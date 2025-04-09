@@ -76,12 +76,17 @@ def convert_int_class_to_float(flare_class):
 
 # user input time in the following format 'YYYY-MM-DD HH:MM:SS.ff' in UTC
 input_time_list = ['2011-02-08 21:11:00.08']
+input_class_list = ['C4.0']
+
+# under here is a commented example of the flare above and another flare we could be interested in.
+# uncomment line 84 and 85 with the flare classes and the date-time you are interested in. 
+# 
+# input_class_list = ['C4.0', 'C1.8']
 # input_time_list = ['2011-02-08 21:11:00.08', '2011-11-14 20:12:30.25']
 
 this_time_list = [pd.Timestamp(input_time, tz='UTC') for input_time in input_time_list]
 
-input_class_list = ['C4.0']
-# input_class_list = ['C4.0', 'C1.8']
+
 
 def convert_int_class_to_float(flare_class):
 

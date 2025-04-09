@@ -30,9 +30,29 @@ The script includes mechanisms to handle download errors and retry failed downlo
 ## Usage
 To download data for a single flare:
 
+The user needs to set what time-ranges and flare magnitude they want ALEXIS to create. 
+For example, if you are interested in the C4.0 class flare that occured on 2011-02-08 21:11:00.08, the pipeline will create all files related to this flare in the directory: "<path_to_your_data_directory>/flare_candidates/flarecandidate_C4.0_at_2011-02-08T21_11_00_08.working".
+
+On line 84 and 85 of the ALEXIS_download_data.py script you will see the following:
+
+``` 
 Set input_time_list = ['2011-02-08 21:11:00.08'].
-Set input_class_list = ['C4.0'].
-Run the script. The data will be downloaded and organized in the specified directories.
+Set input_class_list = ['C4.0']
+
+```
+
+Currently, the pipeline will run data for that combination of input_class and input_time. The data will be downloaded and organized in the specified directories.
+
+If you want to do multiple events, change those lines to reflect the working_directories you want to create. 
+
+The following code will create two working_directories, 
+
+```
+
+input_class_list = ['C4.0', 'C1.8']
+input_time_list = ['2011-02-08 21:11:00.08', '2011-11-14 20:12:30.25']
+
+```
 
 
 
