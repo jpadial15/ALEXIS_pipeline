@@ -206,7 +206,7 @@ not_duplicated_urls = THESE_DF.drop_duplicates(subset=['url']).reset_index(drop 
 
 download_these = not_duplicated_urls.to_dict('records')
 
-print(f'YOU HAVE A TOTAL of {download_these} that will be verified for integrity.')
+print(f'YOU HAVE A TOTAL of {len(download_these)} files that will be verified for integrity.')
 
 # #####
 def dl_params():
