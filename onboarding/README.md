@@ -2,21 +2,8 @@
 **If you only want the event list, please register and download the event list from the data_products directory**
 
 #
-## Requirements:
-### 1. Install conda environment
-   ```
-   conda env create -f ALEXIS_conda_environment.yml
-   
-   ```
 
-### 2. Activate conda environment
-   ```
-   conda activate aiadl_2
-   ```
-### 3. Modify the data config file.
-   In the home directory of the repository, change the values of home directory, jsoc email. 
-
-### 4. SQLite databases: 
+### 1. Creating the SQLite databases: 
    - Make or download the XRS availability database.
    - Remember to make the data_products directory and verify the permissions of all directories and data products. Permissions need to be changed for ruffus database. 
       ```

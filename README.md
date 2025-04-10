@@ -29,3 +29,15 @@ If you are interested in running the pipeline for a time-period of your choice f
 
 Please go to the "onboarding" sub-directory, register, and download (or run) each of the sub-scripts located within the "pipeline" sub-directory.
 
+## Requirements:
+### 1. Install conda environment
+   ```
+   conda env create -f ALEXIS_conda_environment.yml
+   ```
+
+### 2. Activate conda environment
+   ```
+   conda activate aiadl_2
+   ```
+### 3. Modify the data config file.
+   In the home directory of the repository, change the values of home directory, jsoc email. 
