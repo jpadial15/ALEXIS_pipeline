@@ -1,5 +1,5 @@
 
-# If you only want the event list, please register and download the event list from the google drive link in ./data_products/
+# If you only want the event list, please register and download the event list from the data_products directory.
 
 #
 ## Requirements:
