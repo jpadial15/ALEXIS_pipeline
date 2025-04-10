@@ -22,7 +22,7 @@ One can download
 
 
  <center>
-   <img src="./github_images/all_fits.jpg" alt="alt text" width="800">
+   <img src="./../github_images/all_fits.jpg" alt="alt text" width="800">
  </center>
 
 # Running the pipeline on a linux machine
