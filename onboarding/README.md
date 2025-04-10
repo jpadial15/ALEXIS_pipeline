@@ -1,5 +1,5 @@
 
-# If you only want the event list, please register and download the event list from the data_products directory.
+** If you only want the event list, please register and download the event list from the data_products directory **
 
 #
 ## Requirements:
