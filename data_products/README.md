@@ -20,6 +20,11 @@ One can download
  - ALEXIS_1000_all_fits.parquet
  - ALEXIS_1000_all_fits.pickle
 
+
+ <center>
+   <img src="./github_images/all_fits.jpg" alt="alt text" width="800">
+ </center>
+
 # Running the pipeline on a linux machine
 **SQlite databases that are created from the *onboarding* directory will reside in the data_products directory**
 
