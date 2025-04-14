@@ -12,6 +12,11 @@ data_products/*.jpg
 
 data_products/*.pickle
 
+data_products/*.csv
+
+
+data_products/*.parquet
+
 data_products/hmi_db_keywords.md
 
 assets
