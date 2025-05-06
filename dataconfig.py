@@ -1,4 +1,4 @@
-import os
+
 
 
 HOME_DIR = '/home/padialjr/ALEXIS_pipeline'
