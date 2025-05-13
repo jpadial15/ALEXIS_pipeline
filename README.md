@@ -6,6 +6,8 @@ ALEXIS is a pipeline that can re-create the integrated X-Ray flux of the full so
 #
 ### NOTE: ALEXIS does not run on ARM chips (Linux/X86 only)
 #
+### NOTE: 0% of this code was written by Large Language Models
+#
 
 The main goal of the ALEXIS pipeline is to be able to create an independent data product to localize solar flares. 
 A flare list containing the event date, peak-time, Helioprojective Cartesian coordinates, NOAA AR number and HARP identifier is returned.
