@@ -49,4 +49,10 @@ An example of the event list can be seen below:
    ```
    
 3. Modify the data config file.
-   In the home directory of the repository, change the values of home directory, jsoc email. 
+   In the home directory of the repository, change the values of home directory, jsoc email.
+
+
+
+License: Noncommercial use permitted under the Polyform Noncommercial License.
+Commercial use is reserved exclusively by the author (jpadial15).
+Contact for licensing: alexissolarflarecatalog@gmail.com
