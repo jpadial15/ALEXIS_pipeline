@@ -21,4 +21,4 @@ data_products/hmi_db_keywords.md
 
 assets
 
-pipeline/ALEXIS_04_compare_ss_swpc_and_alexis_pipeline.py
+visual_inspection/*
